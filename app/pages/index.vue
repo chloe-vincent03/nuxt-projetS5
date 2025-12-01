@@ -1,5 +1,18 @@
+<script setup lang="ts" ></script>
+
 <template>
+
   <div>
+    <div class="hero">
+      <div class="hero-content">
+        <MTitle as="h1" size="large">Libérez l'excellence culinaire</MTitle>
+        <p>
+          Explorez un monde de saveurs, découvrez des recettes artisanales et laissez l'arôme
+          de notre passion pour la cuisine embaumer votre cuisine
+        </p>
+        <MButton variant="outline" size="small">explorer les recettes</MButton>
+      </div>
+    </div>
     <MTitle as="h1" size="large" >Page d'accueil</MTitle>
     <MTitle as="h2" size="medium" >Page d'accueil</MTitle>
     <MTitle as="h3" size="small" >Page d'accueil</MTitle>
@@ -30,5 +43,36 @@
     <MCards size="small" />
     <MCards size="default" />
     <MCards size="large" />
+
+    <p>Liste des recettes :</p>
   </div>
 </template>
+
+<style scoped>
+.hero {
+  /* variable pour contrôler l'opacité de l'assombrissement */
+  --hero-dark: 0.45;
+  /* overlay sombre + image de fond */
+  background-image: linear-gradient(rgba(0,0,0,var(--hero-dark)), rgba(0,0,0,var(--hero-dark))), url('/photo1.webp');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+}
+
+.hero-content {
+  text-align: center;
+  color: var(--color-text-w);
+  max-width: 700px;
+  padding: 20px;
+
+}
+</style>
