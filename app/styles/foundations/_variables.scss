@@ -1,0 +1,18 @@
+@use './functions' as *;
+
+$small-breakpoint: 360px;
+$medium-breakpoint: 768px;
+$large-breakpoint: 1024px;
+$column-number: 12;
+
+
+:root{
+    --color-primary: #4E61F6;
+    --color-text-w : #fff;
+    --color-secondary : #3745AF;
+    --color-error: #FF0000;
+    --color-error-secondary : #ffcccc;
+    --color-success: #00AA00;
+    --color-success-secondary: #ccffcc;
+    --color-b: #000;
+}
