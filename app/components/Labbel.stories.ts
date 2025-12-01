@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
-import { fn } from 'storybook/test'
-
-import MLabbel from './MLabbel.vue'
-
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
   title: 'Components/Labbel',
@@ -12,20 +8,20 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     variant: { control: 'inline-radio', options: ['default', 'success', 'error'] },
-    size: {control: 'radio', options:['default', 'small', 'large']},
+    size: { control: 'radio', options:['default', 'small', 'large'] },
     placeholder: { control: 'text' },
     type: {
       control: 'radio',
-      options: ['text', 'email', 'password', 'number', 'tel', 'search', 'url', 'file'],
-    },
+      options: ['text', 'email', 'password', 'number', 'tel', 'search', 'url', 'file']
+    }
   },
-  render: (args: any) => ({
+  render: (args) => ({
     components: { MLabbel },
-    setup() {
+    setup () {
       return { args }
     },
-    template: '<MLabbel v-bind="args" > Labbel </MLabbel ',
-  }),
+    template: '<MLabbel v-bind="args" > Labbel </MLabbel '
+  })
 } satisfies Meta<typeof MLabbel>
 
 export default meta
@@ -36,10 +32,10 @@ type Story = StoryObj<typeof meta>
  * to learn how to use render functions.
  */
 export const Default: Story = {
- args:{
-  variant: 'default',
-  size: 'default'
- }
+  args:{
+    variant: 'default',
+    size: 'default'
+  }
 }
 
 export const successsmall: Story = {
@@ -47,7 +43,7 @@ export const successsmall: Story = {
     variant: 'success',
     type: 'text',
     size:'small'
-  },
+  }
 }
 
 export const erroremaillarge: Story = {
@@ -55,17 +51,17 @@ export const erroremaillarge: Story = {
     variant: 'error',
     type: 'email',
     size: 'large'
-  },
+  }
 }
 
 export const password: Story = {
   args: {
     type: 'password'
-  },
+  }
 }
 
 export const file: Story = {
   args: {
     type: 'file'
-  },
+  }
 }

@@ -1,30 +1,32 @@
 <script setup lang="ts" >
 defineProps<{
-    size?: 'small' | 'default' | 'large'
+  size?: 'small' | 'default' | 'large'
 /*     label?: string
     titre?: string
     temps?: number */
-   /*  difficulte?: 'hard' | 'easy'| 'medium' */
+/*  difficulte?: 'hard' | 'easy'| 'medium' */
 }>()
 </script>
 
 <template>
-    <div class="card" :class="{
-         small: size === 'small',
-         large: size === 'large'
-       }" >
-        <img src="/images/Recipe Image.jpg" alt="">
-        <div class="card-list-titre" >
-        <MTitle  as="h3" size="small">Recette essaie1</MTitle>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
-        </div>
-        <div class="card-list">
-            <p>3h - </p>
-            <p>preparation facile - </p>
-            <p>10 personnes</p>
-            <MButton variant="default" size="small" >Voir +</MButton>
-        </div>
+  <div
+    class="card" 
+    :class="{
+      small: size === 'small',
+      large: size === 'large'
+    }" >
+    <img src="/images/Recipe Image.jpg" alt="">
+    <div class="card-list-titre" >
+      <MTitle  as="h3" size="small">Recette essaie1</MTitle>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
     </div>
+    <div class="card-list">
+      <p>3h - </p>
+      <p>preparation facile - </p>
+      <p>10 personnes</p>
+      <MButton variant="default" size="small" >Voir +</MButton>
+    </div>
+  </div>
 
 </template>
 

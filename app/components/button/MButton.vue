@@ -1,18 +1,17 @@
 <script setup lang="ts" >
 defineProps<{
-href?: string 
-variant?: 'default' | 'outline'
-size?: 'default' | 'tiny' | 'small' |'large'
+  href?: string 
+  variant?: 'default' | 'outline'
+  size?: 'default' | 'tiny' | 'small' |'large'
 }>()
 </script>
 
 
 <template>
-<a v-if="href" href="#" class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large' }" ><slot></slot></a>
-<button v-else class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large'}" ><slot></slot></button>
+  <a v-if="href" href="#" class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large' }" ><slot/></a>
+  <button v-else class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large'}" ><slot/></button>
 
 </template>
-
 
 
 <style lang="scss" >

@@ -2,27 +2,27 @@
 
 
 <template>
-    <section class="footer" >
+  <section class="footer" >
     <div class="footer-div" >
-        <img src="/icons/Logo Footer.svg" alt="">
-        <nav  >
-            <ul class="footer-nav">
-                <li>Maison</li>
-                <li>Recette</li>
-                <li>Contact</li>
-                <li>A propos</li>
-            </ul>
-        </nav>
-        <ul class="footer-nav" >
-            <li><img src="/icons/ic_baseline-tiktok.svg" alt=""></li>
-            <li><img src="/icons/Icon-facebook.svg" alt=""></li>
-            <li><img src="/icons/Icon-insta.svg" alt=""></li>
-            <li><img src="/icons/Icon-youtube.png" alt=""></li>
+      <img src="/icons/Logo Footer.svg" alt="">
+      <nav  >
+        <ul class="footer-nav">
+          <li>Maison</li>
+          <li>Recette</li>
+          <li>Contact</li>
+          <li>A propos</li>
         </ul>
+      </nav>
+      <ul class="footer-nav" >
+        <li><img src="/icons/ic_baseline-tiktok.svg" alt=""></li>
+        <li><img src="/icons/Icon-facebook.svg" alt=""></li>
+        <li><img src="/icons/Icon-insta.svg" alt=""></li>
+        <li><img src="/icons/Icon-youtube.png" alt=""></li>
+      </ul>
 
     </div>
     <p class="footer-text" >Copyright: © 2025 Chloé Vincent</p>
-    </section>
+  </section>
 </template>
 
 <style lang="scss"  >

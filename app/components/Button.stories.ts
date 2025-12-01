@@ -1,9 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite';
-
-import { fn } from 'storybook/test';
-
-
-import MButton from './MButton.vue';
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
@@ -13,42 +8,42 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     size: { control: 'select', options: ['small', 'tiny', 'large', 'default'] },
-    variant: {control: 'radio', options:['default', 'outline']},
-    href: { control: 'text' },
+    variant: { control: 'radio', options:['default', 'outline'] },
+    href: { control: 'text' }
   },
-  render: (args: any) => ({
+  render: (args) => ({
     components: { MButton },
-    setup() {
-      return { args };
+    setup () {
+      return { args }
     },
-    template: '<MButton v-bind="args" > clik me </MButton ',
-  }),
-} satisfies Meta<typeof MButton>;
+    template: '<MButton v-bind="args" > clik me </MButton '
+  })
+} satisfies Meta<typeof MButton>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
  * See https://storybook.js.org/docs/api/csf
  * to learn how to use render functions.
  */
-export const Default: Story = {};
+export const Default: Story = {}
 
 export const outline: Story = {
   args: {
-    variant: 'outline',
-  },
-};
+    variant: 'outline'
+  }
+}
 
 export const Small: Story = {
   args: {
-    size: 'small',
-  },
-};
+    size: 'small'
+  }
+}
 
 export const SmallOutline: Story = {
   args: {
     variant: 'outline',
-    size: 'small',
-  },
-};
+    size: 'small'
+  }
+}
