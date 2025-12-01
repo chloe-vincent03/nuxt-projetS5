@@ -1,5 +1,7 @@
 <template>
     <div>
-        <h1>Hellooooo</h1>
+        <MTitle as="h1" size="large">Homepage</MTitle>
+        <MButton>Click me</MButton>
+        <MLoginForm/>
     </div>
 </template>
