@@ -4,30 +4,25 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/styles/main.scss'],
   components : [
-    {path: '~/components', pathPrefix: false, extensions: ['vue']}
+    { path: '~/components', pathPrefix: false, extensions: ['vue'] }
   ],
   vite : {
-      css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
           @use "@/styles/foundations/functions" as *;
           @use "@/styles/foundations/variables" as *;
           @use "@/styles/foundations/mixins" as *;
-        `,
-      },
-    },
-  },
+        `
+        }
+      }
+    }
   },
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/test-utils',
-    '@nuxtjs/storybook'
-  ],
-/*   storybook: {
-    url: 'http://localhost:6006/',
-    storybookRoute: '/storybook',
-    port: 6006,
-  }, */
+    '@nuxt/test-utils'
+  ]
+
 })

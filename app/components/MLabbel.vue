@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<string>()
 defineProps<{
   variant?: 'default' | 'error' | 'success'
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'url' | 'file'
@@ -12,15 +12,15 @@ defineProps<{
 <template>
   <label v-if="label" >{{label}}</label>
   <input
+    v-model="model"
     :type="type"
     class="labbel"
-    v-model="model"
     :placeholder="placeholder"
     :class="{
       error: variant === 'error',
       success: variant === 'success', small: size ==='small',   default: size ==='default', large: size ==='large',
     }"
-  />
+  >
 </template>
 
 

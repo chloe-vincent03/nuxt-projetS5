@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineProps<{
-    as: 'h1' | 'h2' | 'h3' 
-    size: 'large' | 'medium' | 'small'
-}> ();
+  as: 'h1' | 'h2' | 'h3' 
+  size: 'large' | 'medium' | 'small'
+}> ()
 </script>
 
 
 <template>
-    <component :is="as" class="title" :class="{'small':size ==='small','medium':size ==='medium', 'large':size ==='large'}" ><slot> </slot> </component>
+  <component :is="as" class="title" :class="{'small':size ==='small','medium':size ==='medium', 'large':size ==='large'}" ><slot/> </component>
 </template>
 
 <style lang="scss">

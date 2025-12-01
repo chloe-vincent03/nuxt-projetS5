@@ -1,7 +1,7 @@
 <template>
 
-<main class="ly-default" >
+  <main class="ly-default" >
     <slot />
-</main>
+  </main>
 
 </template>

@@ -7,29 +7,29 @@ const Nom = ref('')
 const Prenom = ref('')
 
 const postlogin =() => {
-    console.log(Nom.value, Prenom.value, email.value, password.value)
+  //eslint-disable-next-line no-console
+  console.log(Nom.value, Prenom.value, email.value, password.value)
 }
-
 
 
 </script>
 
 <template>
-    <form  @submit.prevent="postlogin" >
-        <div class="form">
-        <div>
-        <MLabbel label="Nom" type="text" size="large" variant="default" v-model="Nom"/>
-        <MLabbel label="Prénom" type="text" size="large" variant="default" v-model="Prenom"/>
+  <form  @submit.prevent="postlogin" >
+    <div class="form">
+      <div>
+        <MLabbel v-model="Nom" label="Nom" type="text" size="large" variant="default"/>
+        <MLabbel v-model="Prenom" label="Prénom" type="text" size="large" variant="default"/>
         
+      </div>
+      <div>
+        <MLabbel v-model="email" label="email" type="email" size="large" variant="default"/> 
+        <MLabbel v-model="password" label="Mots de passe" type="password" size="large" variant="default"/> 
+      </div>
     </div>
-    <div>
-        <MLabbel label="email" type="email" size="large" variant="default" v-model="email"/> 
-        <MLabbel label="Mots de passe" type="password" size="large" variant="default" v-model="password"/> 
-    </div>
-    </div>
-        <MButton>Se connecter</MButton>
+    <MButton>Se connecter</MButton>
 
-    </form>
+  </form>
 </template>
 
 <style lang="scss" >

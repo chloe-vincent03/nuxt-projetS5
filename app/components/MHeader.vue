@@ -10,7 +10,7 @@ const onMenuClick = () => {
 
 <template>
   <div class="header">
-    <img src="/icons/Logo Nav Bar.svg" alt="" />
+    <img src="/icons/Logo Nav Bar.svg" alt="" >
     
     <nav v-if="isNavOpen">
       <ul class="header-liste">
@@ -20,7 +20,7 @@ const onMenuClick = () => {
         <li>A propos</li>
       </ul>
     </nav>
-    <MButton v-on:click="onMenuClick"  variant="outline">{{ isNavOpen ? 'Close' : 'Menu' }}</MButton>
+    <MButton variant="outline"  @click="onMenuClick">{{ isNavOpen ? 'Close' : 'Menu' }}</MButton>
   </div>
 </template>
 
