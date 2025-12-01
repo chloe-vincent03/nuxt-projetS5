@@ -1,10 +1,16 @@
-<script setup lang="ts" ></script>
+<script setup lang="ts" >
+import IconFacebook from './icons/Icon-facebook.vue';
+import IconInsta from './icons/Icon-insta.vue';
+import IconYoutube from './icons/Icon-youtube.vue';
+import LogoFooter from './icons/Logo Footer.vue';
+
+</script>
 
 
 <template>
   <section class="footer" >
     <div class="footer-div" >
-      <img src="/icons/Logo Footer.svg" alt="">
+      <LogoFooter/>
       <nav  >
         <ul class="footer-nav">
           <li>Maison</li>
@@ -14,10 +20,10 @@
         </ul>
       </nav>
       <ul class="footer-nav" >
-        <li><img src="/icons/ic_baseline-tiktok.svg" alt=""></li>
-        <li><img src="/icons/Icon-facebook.svg" alt=""></li>
-        <li><img src="/icons/Icon-insta.svg" alt=""></li>
-        <li><img src="/icons/Icon-youtube.png" alt=""></li>
+        <li><IconInsta/></li>
+        <li><IconFacebook/></li>
+        <li><IconYoutube/></li>
+        <li><ic-baseline-tiktok/></li>
       </ul>
 
     </div>

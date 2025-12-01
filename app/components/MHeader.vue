@@ -10,7 +10,7 @@ const onMenuClick = () => {
 
 <template>
   <div class="header">
-    <img src="/icons/Logo Nav Bar.svg" alt="" >
+    <LogoNavBar/>
     
     <nav v-if="isNavOpen">
       <ul class="header-liste">

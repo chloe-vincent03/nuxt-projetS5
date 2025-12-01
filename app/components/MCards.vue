@@ -15,7 +15,7 @@ defineProps<{
       small: size === 'small',
       large: size === 'large'
     }" >
-    <img src="/images/Recipe Image.jpg" alt="">
+    <img src="/Recipe Image.jpg" alt="">
     <div class="card-list-titre" >
       <MTitle  as="h3" size="small">Recette essaie1</MTitle>
       <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
