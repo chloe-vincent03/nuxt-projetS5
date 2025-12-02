@@ -15,7 +15,7 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
     <MTitle as="h1" size="large" class="title">{{ recipe.title }}</MTitle>
     <p >{{ recipe.description }}</p>
     <div class="image-wrapper">
-      <NuxtImg :src="recipe.image_url" format="webp" quality="80"/>
+      <NuxtImg :src="`/recipes/` + recipe.image_url" width="1200" height="800"/>
     </div>
     <div class="content">
       <div class="text-content">
@@ -32,7 +32,7 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
         </ul>
       </div>
       <aside class="ingredients-box">
-        <MTitle as="h2" size="small" >Ingredient</MTitle>
+        <MTitle as="h2" size="small" >Ingredients</MTitle>
         <ul>
           <li
             v-for="(ingredient, index ) in recipe.ingredients"
