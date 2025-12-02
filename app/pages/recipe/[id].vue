@@ -13,7 +13,7 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 <template>
   <div v-if="recipe" class="recipe-page">
     <MTitle as="h1" size="large" class="title">{{ recipe.title }}</MTitle>
-    <p >{{ recipe.description }}</p>
+    <p class="description" >{{ recipe.description }}</p>
     <div class="image-wrapper">
       <NuxtImg :src="`/recipes/` + recipe.image_url" width="1200" height="800"/>
     </div>
@@ -52,7 +52,7 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 .recipe-page {
   max-width: 1300px;
   margin: auto;
-  padding: 10px;
+  padding: rem(10);
   font-family: "Inter", sans-serif;
 }
 
@@ -63,9 +63,9 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 
 .image-wrapper {
   width: 100%;
-  border-radius: 14px;
+  border-radius: rem(14);
   overflow: hidden;
-  margin-bottom: 35px;
+  margin-bottom: rem(35);
 
   img {
     width: 100%;
@@ -76,15 +76,15 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 
 .content {
   display: flex;
-  gap: 30px;
+  gap: rem(30);
 }
 
 .text-content {
   flex: 2;
 
   h2 {
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: rem(25);
+    margin-bottom: rem(10);
   }
 
   .instructions li {
@@ -92,19 +92,24 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
   }
 }
 
+.description{
+  text-align: center;
+  font-size: rem(21);
+}
+
 .ingredients-box {
   flex: 1;
   background: var(--color-bg);
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--color-secondary);
+  padding: rem(20);
+  border-radius: rem(12);
+  border: rem(1) solid var(--color-secondary);
 
   h3 {
-    margin-bottom: 12px;
+    margin-bottom: rem(12);
   }
 
   li {
-    margin: 6px 0;
+    margin: rem(6) 0;
     line-height: 1.4;
   }
 }

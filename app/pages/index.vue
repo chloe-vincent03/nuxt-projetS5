@@ -121,10 +121,11 @@ if (error && error.value) throw new Error('Page not Found')
 
 
     <p>Liste des recettes :</p>
-    <ul>
-      <li v-for="(recipe, index) in displayedRecipes" :key="index">
-        <NuxtLink :to="`/recipe/${recipe.recipe_id}`">{{ recipe.title }}</NuxtLink></li>
-    </ul>
+    <div class="recipes-grid">
+      <NuxtLink v-for="(recipe, index) in displayedRecipes" :key="index" :to="`/recipe/${recipe.recipe_id}`" class="recipe-card-link">
+        <MCards :recipe="recipe" />
+      </NuxtLink>
+    </div>
   </div>
 </template>
 

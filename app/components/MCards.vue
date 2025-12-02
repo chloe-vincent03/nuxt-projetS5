@@ -1,29 +1,34 @@
 <script setup lang="ts" >
 defineProps<{
   size?: 'small' | 'default' | 'large'
+  recipe: Recipe
 /*     label?: string
     titre?: string
     temps?: number */
 /*  difficulte?: 'hard' | 'easy'| 'medium' */
 }>()
+
 </script>
 
 <template>
   <div
+    v-if="recipe"
     class="card" 
     :class="{
       small: size === 'small',
       large: size === 'large'
-    }" >
-    <img src="/Recipe Image.jpg" alt="">
+    }"  >
+    <div>
+      <NuxtImg :src="`/recipes/` + recipe.image_url" width="428" height="234" />
+    </div>
     <div class="card-list-titre" >
-      <MTitle  as="h3" size="small">Recette essaie1</MTitle>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+      <MTitle  as="h3" size="small">{{recipe.title}}</MTitle>
+      <p>{{recipe.description}} </p>
     </div>
     <div class="card-list">
-      <p>3h - </p>
-      <p>preparation facile - </p>
-      <p>10 personnes</p>
+      <p>{{ recipe.cuisine_name }} </p>
+      <p v-if="recipe.goal_name">{{recipe.goal_name}} </p>
+      <p>{{recipe.allergy_name}}</p>
       <MButton variant="default" size="small" >Voir +</MButton>
     </div>
   </div>
