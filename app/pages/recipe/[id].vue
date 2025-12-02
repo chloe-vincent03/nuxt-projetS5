@@ -15,7 +15,7 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
     <MTitle as="h1" size="large" class="title">{{ recipe.title }}</MTitle>
     <p >{{ recipe.description }}</p>
     <div class="image-wrapper">
-      <img :src="recipe.image_url" :alt="recipe.title" />
+      <NuxtImg :src="recipe.image_url" format="webp" quality="80"/>
     </div>
     <div class="content">
       <div class="text-content">
@@ -50,26 +50,15 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 
 <style scoped lang="scss">
 .recipe-page {
-  max-width: 950px;
+  max-width: 1300px;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
   font-family: "Inter", sans-serif;
 }
 
 .title {
   text-align: center;
 
-}
-
-.info-bar {
-  text-align: center;
-  margin-bottom: 25px;
-  font-weight: 600;
-  color: #444;
-
-  span {
-    margin: 0 6px;
-  }
 }
 
 .image-wrapper {
@@ -105,10 +94,10 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 
 .ingredients-box {
   flex: 1;
-  background: #f8f8f8;
+  background: var(--color-bg);
   padding: 20px;
   border-radius: 12px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid var(--color-secondary);
 
   h3 {
     margin-bottom: 12px;
