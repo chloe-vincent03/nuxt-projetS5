@@ -1,16 +1,21 @@
 <script lang="ts" setup >
-const { id } = useRoute().params
+const route = useRoute()
 const config = useRuntimeConfig()
-const { data: recipe, error } = await useAsyncData('recipe-' + id, async () => {
-  const { data } = await $fetch<{ data: Recipe }>(`${config.public.apiUrl}/api/recipes/${id}`)
+const { data: recipe, error } = await useAsyncData(`recipe-${route.params.id}`, async () => {
+  const { data } = await $fetch<{ data: FullRecipe }>(`${config.public.apiUrl}/api/recipes/${route.params.id}`)
   return data
 })
 
-if (error && error.value) throw new Error('Page not Found')
+if (!recipe.value || error.value) throw new Error('Recipe not found')
 </script>
 
 <template>
-  <div>
-    <h1>la recette {{ recipe.title }}</h1>
+  <div v-if="recipe" >
+    <h1> {{ recipe.title }}</h1>
+    <p>{{ recipe.instructions }}</p>
+    <ul>
+      <li v-for="(ingredient, index) in recipe.ingredients" :key="index" >{{ ingredient.quantity }} {{ ingredient.unit }} de {{ ingredient.name }}</li>
+    </ul>
+
   </div>
 </template>
