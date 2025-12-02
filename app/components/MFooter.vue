@@ -1,8 +1,4 @@
 <script setup lang="ts" >
-import IconFacebook from './icons/Icon-facebook.vue';
-import IconInsta from './icons/Icon-insta.vue';
-import IconYoutube from './icons/Icon-youtube.vue';
-import LogoFooter from './icons/Logo Footer.vue';
 
 </script>
 
