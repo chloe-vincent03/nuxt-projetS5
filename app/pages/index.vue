@@ -1,22 +1,30 @@
 <script setup lang="ts" >
+
 const config = useRuntimeConfig()
-const { data: recipes, error } = await useAsyncData('recipes', async () => {
-  const { data } = await $fetch<ApiResponse<Recipe[]>>(`${config.public.apiUrl}/api/recipes`)
-  return data
-})
-const { data: cuisines } = await useAsyncData('cuisines', async () => {
-  const { data } = await $fetch<ApiResponse<Cuisine[]>>(`${config.public.apiUrl}/api/cuisines`)
-  return data
-})
+const [{ data: recipes, error }, { data: cuisines }] = await Promise.all([
+  useAsyncData('recipes', async () => {
+    const { data } = await $fetch<ApiResponse<Recipe[]>>(`${config.public.apiUrl}/api/recipes`)
+    return data
+  }),
+  useAsyncData('cuisines', async () => {
+    const { data } = await $fetch<ApiResponse<Cuisine[]>>(`${config.public.apiUrl}/api/cuisines`)
+    return data
+  })
+])
 
 const page = ref(1)
 const RECIPES_PER_PAGE = 2
+
+const search = ref ('')
 const filters = ref<Cuisine['name'][]>([])
+
+watch(()=> [filters.value, search.value], () => {
+  page.value = 1
+})
 
 function onCheckboxInput ($event: Event){
   const target = $event.target
   if (!(target instanceof HTMLInputElement)) return
-
   const value = target.value
   if(!filters.value.includes(value)){
     filters.value.push(value)
@@ -27,23 +35,34 @@ function onCheckboxInput ($event: Event){
 }
 const filteredRecipes = computed<Recipe[]>(() => {
   if (!recipes.value) return []
-  if (!filters.value.length) return recipes.value
-  return recipes.value.filter(recipe => filters.value.includes(recipe.cuisine_name))
+  
+  let results = recipes.value
+  if(filters.value && filters.value.length){
+    results = results.filter(recipe => filters.value.includes(recipe.cuisine_name))
+  }
+  
+  if (search.value.length){
+    results = results.filter(recipe => {
+      return recipe.title.toLowerCase().includes(search.value.toLowerCase())
+    })
+  }
+
+  return results
+})
+
+
+const displayedRecipes = computed<Recipe[]>(() => {
+  if(!filteredRecipes.value) return []
+  return filteredRecipes.value.slice((page.value -1)* RECIPES_PER_PAGE, page.value*RECIPES_PER_PAGE)
 })
 
 const totalPages = computed(() => {
-  return Math.max(1, Math.ceil((filteredRecipes.value || []).length / RECIPES_PER_PAGE))
+  return Math.ceil(filteredRecipes.value.length / RECIPES_PER_PAGE)
 })
 
-const paginatedRecipes = computed<Recipe[]>(() => {
-  const start = (page.value - 1) * RECIPES_PER_PAGE
-  return (filteredRecipes.value || []).slice(start, start + RECIPES_PER_PAGE)
-})
-
-watch(filters, () => {
-  page.value = 1
-})
-
+function onPageClick (index: number){
+  page.value =index
+}
 
 if (error && error.value) throw new Error('Page not Found')
 </script>
@@ -88,27 +107,24 @@ if (error && error.value) throw new Error('Page not Found')
 
     <MLoginForm/>
 
-    <MCards size="small" />
-    <MCards size="default" />
-    <MCards size="large" />
-
+    <input v-model="search" type="text" >
+    <br>
     active filtres : {{ filters }}
+    <br>
+    <div class="pages" >
+      <span v-for="n in totalPages" :key="`page-${n}` " @click="onPageClick(n)" >{{ n }}</span>
+    </div>
     <div class="recipes-filtres" >
       <div v-for="(cuisine, index) in cuisines" :key="index" class="recipes-filtres__item" ><input :id="cuisine.name" type="checkbox" :value="cuisine.name" @input="onCheckboxInput" > <label :for="cuisine.name"> {{ cuisine.name }}</label></div>
 
     </div>
 
 
-    Liste des recettes :
+    <p>Liste des recettes :</p>
     <ul>
-      <li v-for="(recipe, index) in paginatedRecipes" :key="index" ><NuxtLink :to="`/recipe/${recipe.recipe_id}`">{{ recipe.title }}</NuxtLink></li>
+      <li v-for="(recipe, index) in displayedRecipes" :key="index">
+        <NuxtLink :to="`/recipe/${recipe.recipe_id}`">{{ recipe.title }}</NuxtLink></li>
     </ul>
-
-    <nav class="pagination" aria-label="Pagination">
-      <button :disabled="page <= 1" @click="page--">Précédent</button>
-      <span>Page {{ page }} / {{ totalPages }}</span>
-      <button :disabled="page >= totalPages" @click="page++">Suivant</button>
-    </nav>
   </div>
 </template>
 
