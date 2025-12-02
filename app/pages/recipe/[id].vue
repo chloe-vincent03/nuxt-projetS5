@@ -8,6 +8,13 @@ const { data: recipe, error } = await useAsyncData(`recipe-${route.params.id}`, 
 })
 
 if (!recipe.value || error.value) throw new Error('Recipe not found')
+
+useHead({
+  title: recipe.value.title,
+  meta :[
+    { name: 'description',content: recipe.value.description }
+  ]
+})
 </script>
 
 <template>

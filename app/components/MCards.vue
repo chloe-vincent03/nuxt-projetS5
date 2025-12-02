@@ -28,8 +28,10 @@ defineProps<{
     <div class="card-list">
       <p>{{ recipe.cuisine_name }} </p>
       <p v-if="recipe.goal_name">{{recipe.goal_name}} </p>
-      <p>{{recipe.allergy_name}}</p>
-      <MButton variant="default" size="small" >Voir +</MButton>
+      <p>{{recipe.diet_name}}</p>
+      <NuxtLink :to="`/recipe/${recipe.recipe_id}`" >
+        <MButton variant="default" size="small" >Voir +</MButton>
+      </NuxtLink>
     </div>
   </div>
 
@@ -56,11 +58,21 @@ defineProps<{
       &.small {
     width: rem(311);
 
+    img {
+      width: 100%;
+      height: rem(170);
+      object-fit: cover;
+    }
   }
 
   &.large {
-    width: rem(632);
+    width: rem(550);
 
+    img {
+      width: 100%;
+      height: rem(346);
+      object-fit: cover;
+    }
   }
 
 }
@@ -70,6 +82,7 @@ defineProps<{
         justify-content: space-between;
         padding: 0 1.5rem;
         margin-top: 1rem;
+        font-size: rem(12);
     }
 
     .card-list-titre{
