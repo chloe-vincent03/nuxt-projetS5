@@ -25,7 +25,8 @@ async function onSubmit (){
     const cookie = useCookie('recipe_token')
     cookie.value = token
 
-    console.log(token)
+    await navigateTo('/dashboard')
+
   }catch (err) {
     console.log(err)
   }
