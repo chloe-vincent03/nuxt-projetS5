@@ -1,5 +1,12 @@
 <script setup lang="ts" >
 
+useHead({
+  title: 'Mes recettes | Accueil',
+  meta :[
+    { name: 'description',content: 'Page d\'acceuil de mon site de recettes' }
+  ]
+})
+
 const config = useRuntimeConfig()
 const [{ data: recipes, error }, { data: cuisines }] = await Promise.all([
   useAsyncData('recipes', async () => {
@@ -121,10 +128,11 @@ if (error && error.value) throw new Error('Page not Found')
 
 
     <p>Liste des recettes :</p>
-    <ul>
-      <li v-for="(recipe, index) in displayedRecipes" :key="index">
-        <NuxtLink :to="`/recipe/${recipe.recipe_id}`">{{ recipe.title }}</NuxtLink></li>
-    </ul>
+    <div class="recipes-grid">
+      <div v-for="(recipe, index) in displayedRecipes" :key="index" >
+        <MCards :recipe="recipe"  size="large"/>
+      </div>
+    </div>
   </div>
 </template>
 

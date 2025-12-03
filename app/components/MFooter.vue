@@ -9,7 +9,7 @@
       <LogoFooter/>
       <nav  >
         <ul class="footer-nav">
-          <li>Maison</li>
+          <li> <a href="/">Maison</a> </li>
           <li>Recette</li>
           <li>Contact</li>
           <li>A propos</li>

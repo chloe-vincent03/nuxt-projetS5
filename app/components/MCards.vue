@@ -1,30 +1,37 @@
 <script setup lang="ts" >
 defineProps<{
   size?: 'small' | 'default' | 'large'
+  recipe: Recipe
 /*     label?: string
     titre?: string
     temps?: number */
 /*  difficulte?: 'hard' | 'easy'| 'medium' */
 }>()
+
 </script>
 
 <template>
   <div
+    v-if="recipe"
     class="card" 
     :class="{
       small: size === 'small',
       large: size === 'large'
-    }" >
-    <img src="/Recipe Image.jpg" alt="">
+    }"  >
+    <div>
+      <NuxtImg :src="`/recipes/` + recipe.image_url" width="428" height="234" />
+    </div>
     <div class="card-list-titre" >
-      <MTitle  as="h3" size="small">Recette essaie1</MTitle>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+      <MTitle  as="h3" size="small">{{recipe.title}}</MTitle>
+      <p>{{recipe.description}} </p>
     </div>
     <div class="card-list">
-      <p>3h - </p>
-      <p>preparation facile - </p>
-      <p>10 personnes</p>
-      <MButton variant="default" size="small" >Voir +</MButton>
+      <p>{{ recipe.cuisine_name }} </p>
+      <p v-if="recipe.goal_name">{{recipe.goal_name}} </p>
+      <p>{{recipe.diet_name}}</p>
+      <NuxtLink :to="`/recipe/${recipe.recipe_id}`" >
+        <MButton variant="default" size="small" >Voir +</MButton>
+      </NuxtLink>
     </div>
   </div>
 
@@ -51,11 +58,21 @@ defineProps<{
       &.small {
     width: rem(311);
 
+    img {
+      width: 100%;
+      height: rem(170);
+      object-fit: cover;
+    }
   }
 
   &.large {
-    width: rem(632);
+    width: rem(550);
 
+    img {
+      width: 100%;
+      height: rem(346);
+      object-fit: cover;
+    }
   }
 
 }
@@ -65,6 +82,7 @@ defineProps<{
         justify-content: space-between;
         padding: 0 1.5rem;
         margin-top: 1rem;
+        font-size: rem(12);
     }
 
     .card-list-titre{

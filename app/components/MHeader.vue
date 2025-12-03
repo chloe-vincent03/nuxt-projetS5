@@ -14,7 +14,7 @@ const onMenuClick = () => {
     
     <nav v-if="isNavOpen">
       <ul class="header-liste">
-        <li>Maison</li>
+        <li> <a href="/"> Maison </a> </li>
         <li>Recette</li>
         <li>Contact</li>
         <li>A propos</li>
