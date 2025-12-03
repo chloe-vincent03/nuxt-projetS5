@@ -6,6 +6,7 @@ const config = useRuntimeConfig()
 
 async function onSubmit (){
   try{
+    //eslint-disable-next-line no-console
     console.log('=> Api call to login')
     const response = await fetch(`${config.public.apiUrl}/api/users/login`,{
       method: 'POST',
@@ -28,6 +29,7 @@ async function onSubmit (){
     await navigateTo('/dashboard')
 
   }catch (err) {
+    //eslint-disable-next-line no-console
     console.log(err)
   }
 }
