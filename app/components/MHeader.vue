@@ -10,12 +10,14 @@ const onMenuClick = () => {
 
 <template>
   <div class="header">
-    <LogoNavBar/>
+    <NuxtLink to="/" >
+      <LogoNavBar/>
+    </NuxtLink>
     
     <nav v-if="isNavOpen">
       <ul class="header-liste">
-        <li> <a href="/"> Maison </a> </li>
-        <li>Recette</li>
+        <li> <a href="/"> Acceuil </a> </li>
+        <li> <a href="/dashboard" > Profil </a></li>
         <li>Contact</li>
         <li>A propos</li>
       </ul>

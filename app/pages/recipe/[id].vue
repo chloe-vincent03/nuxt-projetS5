@@ -2,8 +2,13 @@
 
 const route = useRoute()
 const config = useRuntimeConfig()
+const cookie = useCookie('recipe_token') 
+
+// >>> Récupération de la recette
 const { data: recipe, error } = await useAsyncData(`recipe-${route.params.id}`, async () => {
-  const { data } = await $fetch<ApiResponse<FullRecipe >>(`${config.public.apiUrl}/api/recipes/${route.params.id}`)
+  const { data } = await $fetch<ApiResponse<FullRecipe>>(
+    `${config.public.apiUrl}/api/recipes/${route.params.id}`
+  )
   return data
 })
 
@@ -11,19 +16,50 @@ if (!recipe.value || error.value) throw new Error('Recipe not found')
 
 useHead({
   title: recipe.value.title,
-  meta :[
-    { name: 'description',content: recipe.value.description }
+  meta: [
+    { name: 'description', content: recipe.value.description }
   ]
 })
+
+
+// >>> Fonction DELETE simplifiée
+async function deleteRecipe () {
+  if (!confirm('Es-tu sûr de vouloir supprimer cette recette ?')) return
+
+  try {
+    const response = await fetch(`${config.public.apiUrl}/api/recipes/${recipe.value?.recipe_id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${cookie.value}`
+      }
+    })
+
+    const json = await response.json()
+    if (!json.success) {
+      alert(json.message)
+      return
+    }
+
+    // Redirection après suppression
+    await navigateTo('/dashboard')
+
+  } catch (err) {
+    //eslint-disable-next-line no-console
+    console.error('Erreur suppression recette:', err)
+  }
+}
+
 </script>
 
 <template>
   <div v-if="recipe" class="recipe-page">
     <MTitle as="h1" size="large" class="title">{{ recipe.title }}</MTitle>
-    <p class="description" >{{ recipe.description }}</p>
+    <p class="description">{{ recipe.description }}</p>
+
     <div class="image-wrapper">
       <NuxtImg :src="`/recipes/` + recipe.image_url" width="1200" height="800"/>
     </div>
+
     <div class="content">
       <div class="text-content">
         <p v-if="recipe.cuisine_name">Cuisine : {{ recipe.cuisine_name }}</p>
@@ -31,26 +67,28 @@ useHead({
         <p v-if="recipe.diet_name">Régime : {{ recipe.diet_name }}</p>
         <p v-if="recipe.allergy_name">Allergènes : {{ recipe.allergy_name }}</p>
 
-        <MTitle as="h2" size="small" >Instructions</MTitle>
+        <MTitle as="h2" size="small">Instructions</MTitle>
         <ul class="instructions">
           <li v-for="(instruction, index) in recipe.instructions" :key="index">
             <strong>{{ instruction.step_number }}.</strong> {{ instruction.description }}
           </li>
         </ul>
       </div>
+
       <aside class="ingredients-box">
-        <MTitle as="h2" size="small" >Ingredients</MTitle>
+        <MTitle as="h2" size="small">Ingredients</MTitle>
         <ul>
-          <li
-            v-for="(ingredient, index ) in recipe.ingredients"
-            :key="index"
-          >
+          <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
             {{ ingredient.quantity }} {{ ingredient.unit }} de {{ ingredient.name }}
           </li>
         </ul>
       </aside>
-
     </div>
+
+    <MButton variant="supp" @click="deleteRecipe">
+      Supprimer la recette
+    </MButton>
+
   </div>
 </template>
 

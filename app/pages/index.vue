@@ -87,60 +87,27 @@ if (error && error.value) throw new Error('Page not Found')
         <MButton variant="outline" size="small">explorer les recettes</MButton>
       </div>
     </div>
-    <MTitle as="h1" size="large" >Page d'accueil</MTitle>
-    <MTitle as="h2" size="medium" >Page d'accueil</MTitle>
-    <MTitle as="h3" size="small" >Page d'accueil</MTitle>
-    <div>
-      <MButton size="tiny" variant="default">Click me</MButton>
-      <MButton size="small" variant="default">Click me </MButton>
-      <MButton size="default" variant="default">Click me</MButton>
-      <MButton size="large" variant="default">Click me</MButton>
-    </div>
-    <div>
-      <MButton size="tiny" variant="outline">Click me</MButton>
-      <MButton size="small" variant="outline">Click me</MButton>
-      <MButton size="default" variant="outline">Click me</MButton>
-      <MButton size="large" variant="outline">Click me</MButton>
-    </div>
-    <div>
-      <MLabbel placeholder="Géraldine" type="text" size="small" >Prénom (type: text size: small)</MLabbel>
-      <MLabbel variant="success" placeholder="Dubois" type="text" size="default" >Nom (type: text size: default)</MLabbel>
-      <MLabbel variant="error" placeholder="bonjour.." type="text" size="large" >text (type: text size: large)</MLabbel>
-      <MLabbel variant="default" placeholder="cdcaef@gmail.com" type="email" size="default" >Ton adress mail</MLabbel>
-      <MLabbel variant="default" placeholder="1245795" type="number" size="default" >Ton numero</MLabbel>
-      <MLabbel variant="default" placeholder="1234ABC" type="password"  size="default">Password</MLabbel>
-      <MLabbel variant="default" placeholder="noel" type="search"  size="default">faite une recherche</MLabbel>
-    </div>
 
-    <MLoginForm/>
+    <!-- <input v-model="search" type="text" > -->
 
-    <input v-model="search" type="text" >
-    <br>
-    active filtres : {{ filters }}
-    <br>
-    <div class="pages" >
-      <span v-for="n in totalPages" :key="`page-${n}` " @click="onPageClick(n)" >{{ n }}</span>
-    </div>
     <div class="recipes-filtres" >
       <div v-for="(cuisine, index) in cuisines" :key="index" class="recipes-filtres__item" ><input :id="cuisine.name" type="checkbox" :value="cuisine.name" @input="onCheckboxInput" > <label :for="cuisine.name"> {{ cuisine.name }}</label></div>
-
     </div>
-
-
-    <p>Liste des recettes :</p>
+    <MTitle as="h2" size="medium" >Liste des recettes :</MTitle>
     <div class="recipes-grid">
       <div v-for="(recipe, index) in displayedRecipes" :key="index" >
         <MCards :recipe="recipe"  size="large"/>
       </div>
+    </div>
+    <div class="pages" >
+      <span v-for="n in totalPages" :key="`page-${n}` " @click="onPageClick(n)" >{{ n }}</span>
     </div>
   </div>
 </template>
 
 <style scoped>
 .hero {
-  /* variable pour contrôler l'opacité de l'assombrissement */
   --hero-dark: 0.45;
-  /* overlay sombre + image de fond */
   background-image: linear-gradient(rgba(0,0,0,var(--hero-dark)), rgba(0,0,0,var(--hero-dark))), url('/photo1.webp');
   background-size: cover; 
   background-position: center;
@@ -163,4 +130,71 @@ if (error && error.value) throw new Error('Page not Found')
   padding: 20px;
 
 }
+
+.recipes-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.recipes-filtres__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  border: 1px solid #e5e5e5;
+}
+
+.recipes-filtres__item:hover {
+  background: #ececec;
+}
+
+.recipes-filtres__item input {
+  cursor: pointer;
+}
+
+.recipes-filtres__item label {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+
+.recipes-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 recettes */
+  gap: 25px;
+}
+
+.recipes-grid > div {
+  display: flex;
+  justify-content: center;
+}
+
+.pages {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.pages span {
+  padding: 6px 12px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  border: 1px solid #dedede;
+}
+
+.pages span:hover {
+  background: #e2e2e2;
+}
+
+
 </style>
