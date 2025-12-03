@@ -6,11 +6,13 @@
 <template>
   <section class="footer" >
     <div class="footer-div" >
-      <LogoFooter/>
+      <NuxtLink to="/" >
+        <LogoFooter/>
+      </NuxtLink>
       <nav  >
         <ul class="footer-nav">
-          <li> <a href="/">Maison</a> </li>
-          <li>Recette</li>
+          <li> <a href="/">Accueil</a> </li>
+          <li> <a href="/dashboard" > Profil </a></li>
           <li>Contact</li>
           <li>A propos</li>
         </ul>

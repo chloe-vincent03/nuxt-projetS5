@@ -40,6 +40,9 @@ if (error && error.value) {
       >
         <MCards :recipe="recipe" size="small" />
       </div>
+      <NuxtLink to="/add-recipe" >
+        <MButton variant="outline" size="small" >Ajouter un recette</MButton>
+      </NuxtLink>
     </div>
 
     <p v-else>Aucune recette trouvée.</p>
