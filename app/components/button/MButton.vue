@@ -1,15 +1,15 @@
 <script setup lang="ts" >
 defineProps<{
   href?: string 
-  variant?: 'default' | 'outline'
+  variant?: 'default' | 'outline' | 'supp'
   size?: 'default' | 'tiny' | 'small' |'large'
 }>()
 </script>
 
 
 <template>
-  <a v-if="href" href="#" class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large' }" ><slot/></a>
-  <button v-else class="button" :class="{'outline':variant ==='outline', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large'}" ><slot/></button>
+  <a v-if="href" href="#" class="button" :class="{'outline':variant ==='outline', 'supp':variant ==='supp', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large' }" ><slot/></a>
+  <button v-else class="button" :class="{'outline':variant ==='outline', 'supp':variant ==='supp', 'small':size ==='small','tiny':size ==='tiny', 'large':size ==='large'}" ><slot/></button>
 
 </template>
 
@@ -56,13 +56,15 @@ defineProps<{
         background: var(--button-color-text);
         color: var(--button-bg-color);
         border: 2px solid var(--button-bg-color);
-        border-radius: rem(8);
-        margin: rem(4);
-        cursor: pointer;
         &:hover {
         background: var(--button-bg-color);
         color: var(--button-color-text);
         }
+    &.supp{
+        background: var(--color-error);
+        color: var(--color-text-w);
+
+    }
 /*         &--focus {
             outline: 4px solid #96a1f3;
     
