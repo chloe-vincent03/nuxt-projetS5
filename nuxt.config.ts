@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     }
   },
   vite : {
+    optimizeDeps:{
+      include: ['react-compiler-runtime','react','react-dom']
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -35,7 +38,12 @@ export default defineNuxtConfig({
   ],
   sanity: {
     projectId: 'rl4zi0v7',
-    dataset: 'production'
+    dataset: 'production',
+    visualEditing: {
+      token: process.env.NUXT_SANITY_API_TOKEN,
+      studioUrl: process.env.NUXT_SANITY_STUDIO_URL,
+      stega: false
+    }
   }
 
 })
