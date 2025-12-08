@@ -30,7 +30,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/test-utils'
-  ]
+    '@nuxt/test-utils',
+    '@nuxtjs/sanity'
+  ],
+  sanity: {
+    projectId: 'rl4zi0v7',
+    dataset: 'production'
+  }
 
 })
