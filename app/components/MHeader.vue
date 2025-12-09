@@ -1,56 +1,47 @@
 <script setup lang="ts">
+import type { SanitySiteSettings } from '~/types/cms/sitesettings'
 
+defineProps<{
+  logo: SanitySiteSettings['logo']
+  navigation: SanitySiteSettings['navigation']
+}>()
 
 const isNavOpen = ref(false)
 
 const onMenuClick = () => {
   isNavOpen.value = !isNavOpen.value
 }
+const { urlFor } = useSanityImage()
 </script>
 
 <template>
   <div class="header">
-    <NuxtLink to="/" >
-      <LogoNavBar/>
+    <NuxtLink to="/">
+      <img v-if="logo && urlFor(logo)" :src="urlFor(logo)?.url()" alt="" >
     </NuxtLink>
-    
+
     <nav v-if="isNavOpen">
       <ul class="header-liste">
-        <li> <a href="/"> Acceuil </a> </li>
-        <li> <a href="/dashboard" > Profil </a></li>
-        <li>Contact</li>
-        <li>A propos</li>
+        <li
+          v-for="(item, index) in navigation"
+          :key="index"
+        >
+          <NuxtLink :to="item.url">
+            {{ item.label }}
+          </NuxtLink>
+        </li>
       </ul>
     </nav>
-    <MButton variant="outline"  @click="onMenuClick">{{ isNavOpen ? 'Close' : 'Menu' }}</MButton>
+
+    <MButton variant="outline" @click="onMenuClick">
+      {{ isNavOpen ? 'Close' : 'Menu' }}
+    </MButton>
   </div>
 </template>
 
-<style lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  box-sizing: border-box;
-  border: rem(3);
-  border-radius: rem(20);
-  padding: rem(12) rem(16);
-}
 
-.header-liste {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: rem(12);
-  align-items: center;
-}
-
-.header-liste li {
-    font-size: rem(24);
-    font-weight: semi-bold;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
+<style>
+  .header-liste{
+    color: var(--color-b);
+  }
 </style>

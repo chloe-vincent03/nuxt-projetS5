@@ -1,4 +1,9 @@
 <script setup lang="ts" >
+import type { SanitySiteSettings } from '~/types/cms/sitesettings'
+
+defineProps<{
+  navigation: SanitySiteSettings['navigation']
+}>()
 
 </script>
 
@@ -10,11 +15,15 @@
         <LogoFooter/>
       </NuxtLink>
       <nav  >
-        <ul class="footer-nav">
-          <li> <a href="/">Accueil</a> </li>
-          <li> <a href="/dashboard" > Profil </a></li>
-          <li>Contact</li>
-          <li>A propos</li>
+        <ul>
+          <li
+            v-for="(item, index) in navigation"
+            :key="index"
+          >
+            <NuxtLink :to="item.url">
+              {{ item.label }}
+            </NuxtLink>
+          </li>
         </ul>
       </nav>
       <ul class="footer-nav" >
