@@ -1,4 +1,9 @@
 <script setup lang="ts" >
+import type { SanityHome } from '~/types/cms/home'
+
+const query = groq`*[_type == "home"][0]`
+const { data: home } = await useLazySanityQuery<SanityHome>(query)
+const { urlFor } = useSanityImage()
 
 const config = useRuntimeConfig()
 const [{ data: recipes, error }, { data: cuisines }] = await Promise.all([
@@ -65,20 +70,51 @@ function onPageClick (index: number){
 }
 
 if (error && error.value) throw new Error('Page not Found')
+
+watchEffect(() => {
+  if (!home.value) return
+
+  useHead({
+    title: home.value.title,
+    meta: [
+      {
+        name: 'description',
+        content: home.value.description
+      }
+    ]
+  })
+})
+
 </script>
 
 <template>
 
   <div>
-    <div class="hero">
+    <div  v-if="home" class="hero">
       <div class="hero-content">
-        <MTitle as="h1" size="large">Libérez l'excellence culinaire</MTitle>
+
+        <MTitle as="h1" size="large">
+          {{ home.hero?.title }}
+        </MTitle>
+
         <p>
-          Explorez un monde de saveurs, découvrez des recettes artisanales et laissez l'arôme
-          de notre passion pour la cuisine embaumer votre cuisine
+          {{ home.hero?.subtitle }}
         </p>
-        <MButton variant="outline" size="small">explorer les recettes</MButton>
+
+        <MButton variant="outline" size="small">
+          Explorer les recettes
+        </MButton>
+
       </div>
+
+      <img
+        v-if="home.image"
+        :src="urlFor(home.image)?.width(550).height(310).url()"
+        :alt="home?.title"
+        class="hero-image"
+        width="550"
+        height="310"
+      />
     </div>
 
     <!-- <input v-model="search" type="text" > -->
