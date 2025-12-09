@@ -1,12 +1,5 @@
 <script setup lang="ts" >
 
-useHead({
-  title: 'Mes recettes | Accueil',
-  meta :[
-    { name: 'description',content: 'Page d\'acceuil de mon site de recettes' }
-  ]
-})
-
 const config = useRuntimeConfig()
 const [{ data: recipes, error }, { data: cuisines }] = await Promise.all([
   useAsyncData('recipes', async () => {
