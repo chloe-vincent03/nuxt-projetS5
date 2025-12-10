@@ -22,7 +22,7 @@ useHead(() => ({
   <main class="ly-default" >
     <MHeader v-if="data" v-bind="{navigation: data.navigation, logo: data.logo}" />
     <slot />
-    <MFooter v-if="data" v-bind="{navigation: data.navigation}" />
+    <MFooter v-if="data" v-bind="{navigation: data.navigation, logofooter: data.logofooter}" />
   </main>
 
 </template>

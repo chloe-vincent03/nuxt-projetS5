@@ -5,6 +5,7 @@ type SanitySiteSettings = SanityDocument & {
   title: string 
   description : string 
   logo : SanityImageSource
+  logofooter : SanityImageSource
   navigation : SanityNavigation[]
 }
 
