@@ -1,4 +1,4 @@
-<script setup lang="ts" >
+<script setup lang="ts">
 import type { SanitySiteSettings } from '~/types/cms/sitesettings'
 const { urlFor } = useSanityImage()
 
@@ -6,78 +6,141 @@ defineProps<{
   navigation: SanitySiteSettings['navigation']
   logofooter: SanitySiteSettings['logofooter']
 }>()
-
 </script>
 
-
 <template>
-  <section class="footer" >
-    <div class="footer-div" >
-      <NuxtLink to="/" class="header__logo" >
+  <footer class="footer">
+    <div class="footer__container">
+      <NuxtLink to="/" class="footer__logo">
         <img
           v-if="logofooter && urlFor(logofooter)"
           :src="urlFor(logofooter)?.url()"
           alt="Logo"
+          class="footer__logo-img"
         />
       </NuxtLink>
-      <nav >
-        <ul class="footer-nav" >
+
+      <nav class="footer__nav-wrapper">
+        <ul class="footer__nav">
           <li
             v-for="(item, index) in navigation"
             :key="index"
+            class="footer__nav-item"
           >
-            <NuxtLink :to="item.url">
+            <NuxtLink :to="item.url" class="footer__nav-link">
               {{ item.label }}
             </NuxtLink>
           </li>
         </ul>
-      </nav>
-      <ul class="footer-nav" >
-        <li><IconInsta/></li>
-        <li><IconFacebook/></li>
-        <li><IconYoutube/></li>
-        <li><ic-baseline-tiktok/></li>
-      </ul>
 
+        <ul class="footer__social">
+          <li class="footer__social-item"><IconInsta/></li>
+          <li class="footer__social-item"><IconFacebook/></li>
+          <li class="footer__social-item"><IconYoutube/></li>
+          <li class="footer__social-item"><ic-baseline-tiktok/></li>
+        </ul>
+      </nav>
     </div>
-    <p class="footer-text" >Copyright: © 2025 Chloé Vincent</p>
-  </section>
+    <p class="footer__text">Copyright: © 2025 Chloé Vincent</p>
+  </footer>
 </template>
 
-<style lang="scss"  >
-.footer{
-    --footer-bg-color: var(--color-b);
-    --footer-text: var(--color-text-w);
-    background: var(--footer-bg-color);
-    color: var(--footer-text);
-    font-weight: semi-bold;
-    font-family: Arial, Helvetica, sans-serif;
+<style lang="scss">
+.footer {
+  background-color: var(--color-b);
+  color: var(--color-text-w);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  padding: rem(16);
 
-}
-.footer-div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  box-sizing: border-box;
-  border: rem(3);
-  border-radius: rem(20);
-  padding: rem(12) rem(16);
-}
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(24);
+    width: 100%;
+    max-width: rem(1200);
+    margin: 0 auto;
 
-.footer-nav {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: rem(12);
-  align-items: center;   
-  font-size: rem(18);
-}
+    @media (min-width: rem(768)) {
+      flex-direction: row; 
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
 
-.footer-text{
-font-size: rem(12);
-text-align: center;
-padding: rem(8);
+  &__logo {
+    order: 1; 
+    @media (min-width: rem(768)) {
+      order: 1;/
+    }
+  }
+
+  &__logo-img {
+    max-width: rem(150);
+    height: auto;
+  }
+
+  &__nav-wrapper {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(16);
+    width: 100%;
+
+    @media (min-width: rem(768)) {
+      order: 2; 
+      flex-direction: row;
+      justify-content: center;
+      gap: rem(32);
+      width: auto;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+  }
+
+  &__nav-link {
+    text-decoration: none;
+    color: var(--color-text-w);
+    font-size: rem(18);
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &__social {
+    order: 3; 
+    display: flex;
+    gap: rem(16);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @media (min-width: rem(768)) {
+      order: 3; 
+    }
+  }
+
+  &__social-item {
+    font-size: rem(24);
+    cursor: pointer;
+  }
+
+  &__text {
+    font-size: rem(14);
+    text-align: center;
+    margin-top: rem(16);
+  }
 }
 </style>
