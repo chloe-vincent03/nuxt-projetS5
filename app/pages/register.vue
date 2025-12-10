@@ -31,7 +31,7 @@ async function onSubmit() {
         throw new Error('Erreur lors de l\'inscription')
     }
     
-    await navigateTo('/login')
+    await navigateTo('/dashboard')
     
   } catch (err) {
     // eslint-disable-next-line no-console

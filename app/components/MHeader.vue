@@ -12,6 +12,13 @@ const onMenuClick = () => {
   isNavOpen.value = !isNavOpen.value
 }
 const { urlFor } = useSanityImage()
+const cookie = useCookie('recipe_token')
+const isAuthenticated = computed(() => !!cookie.value)
+
+const logout = () => {
+  cookie.value = null
+  window.location.reload()
+}
 </script>
 
 <template>
@@ -21,7 +28,7 @@ const { urlFor } = useSanityImage()
     </NuxtLink>
 
     <nav v-if="isNavOpen">
-      <ul class="header-liste">
+      <ul class="header-liste">  
         <li
           v-for="(item, index) in navigation"
           :key="index"
@@ -30,6 +37,24 @@ const { urlFor } = useSanityImage()
             {{ item.label }}
           </NuxtLink>
         </li>
+
+        <template v-if="isAuthenticated">
+          <li>
+            <NuxtLink to="/dashboard"> <MButton>Mon Profil</MButton></NuxtLink>
+          </li>
+          <li>
+            <MButton @click="logout">Se déconnecter</MButton>
+          </li>
+        </template>
+        
+        <template v-else>
+          <li>
+            <NuxtLink to="/login"><MButton variant="outline">Se connecter</MButton></NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/register"><MButton variant="default">S'inscrire</MButton></NuxtLink>
+          </li>
+        </template>
       </ul>
     </nav>
 
