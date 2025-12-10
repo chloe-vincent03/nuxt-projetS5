@@ -1,12 +1,25 @@
 <script setup lang="ts">
+import type { User } from '~/types/api/user'
 definePageMeta({
   middleware: ['auth']
 })
 
 const config = useRuntimeConfig()
+const cookie = useCookie('recipe_token')
 
+// Récupération du profil utilisateur
+const { data: user } = await useFetch<User>(`${config.public.apiUrl}/api/users/profile`, {
+  headers: {
+    Authorization: `Bearer ${cookie.value}`
+  }
+  ,
+  transform: (response: User) => {
+    return response.data || response
+  }
+})
+
+// Récupération des recettes de l'utilisateur connecté
 const { data: myRecipes, error } = await useAsyncData('my-recipes', async () => {
-  const cookie = useCookie('recipe_token')
   return await $fetch<ApiResponse<Recipe[]>>(`${config.public.apiUrl}/api/recipes/my-recipes`, {
     headers: {
       Authorization: `Bearer ${cookie.value}`
@@ -15,7 +28,6 @@ const { data: myRecipes, error } = await useAsyncData('my-recipes', async () => 
 })
 
 async function logout () {
-  const cookie = useCookie('recipe_token')
   cookie.value = null
   navigateTo('/login')
 }
@@ -26,7 +38,6 @@ async function deleteAccount () {
   }
 
   try {
-    const cookie = useCookie('recipe_token')
     await $fetch(`${config.public.apiUrl}/api/users/profile`, {
       method: 'DELETE',
       headers: {
@@ -53,11 +64,23 @@ if (error && error.value) {
   <div class="p-dashboard">
     <MTitle as="h1" size="large">Profil</MTitle>
     
+    <!-- Affichage des infos utilisateur -->
+    <div v-if="user" class="user-info">
+      <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+      <p><strong>Email :</strong> {{ user.email }}</p>
+      <p v-if="user.first_name || user.last_name">
+        <strong>Nom complet :</strong> {{ user.first_name }} {{ user.last_name }}
+      </p>
+    </div>
+
     <div class="actions">
-      <MButton type="button" @click="logout">Se déconnecter</MButton>
-      <MButton type="button" variant="outline" @click="deleteAccount">
+      <MButton size="default" @click="logout">Se déconnecter</MButton>
+      <MButton variant="outline" size="default" @click="deleteAccount">
         Supprimer mon compte
       </MButton>
+      <NuxtLink to="/dashboard/edit">
+        <p variant="outline" size="small" >Modifier mon profil</p>
+      </NuxtLink>
     </div>
 
     <MTitle as="h2" size="medium">Mes recettes :</MTitle>
@@ -84,6 +107,19 @@ if (error && error.value) {
     gap: 1rem;
     margin-bottom: 2rem;
     align-items: center;
+  }
+
+  .user-info {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    
+    p {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
   }
 
   .recipes-grid {
