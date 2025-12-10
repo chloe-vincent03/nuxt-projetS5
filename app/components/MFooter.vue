@@ -1,8 +1,10 @@
 <script setup lang="ts" >
 import type { SanitySiteSettings } from '~/types/cms/sitesettings'
+const { urlFor } = useSanityImage()
 
 defineProps<{
   navigation: SanitySiteSettings['navigation']
+  logofooter: SanitySiteSettings['logofooter']
 }>()
 
 </script>
@@ -11,11 +13,15 @@ defineProps<{
 <template>
   <section class="footer" >
     <div class="footer-div" >
-      <NuxtLink to="/" >
-        <LogoFooter/>
+      <NuxtLink to="/" class="header__logo" >
+        <img
+          v-if="logofooter && urlFor(logofooter)"
+          :src="urlFor(logofooter)?.url()"
+          alt="Logo"
+        />
       </NuxtLink>
-      <nav  >
-        <ul>
+      <nav >
+        <ul class="footer-nav" >
           <li
             v-for="(item, index) in navigation"
             :key="index"
