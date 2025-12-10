@@ -44,32 +44,32 @@ async function onSubmit () {
 
 <template>
   <div>
-    <h1>Créer un compte</h1>
+    <MTitle as="h1" size="large">Créer un compte</MTitle>
     <form action="" @submit.prevent="onSubmit">
       
       <div>
         <label for="username">Nom d'utilisateur</label>
-        <input id="username" v-model="username" type="text" required placeholder="Pseudo">
+        <MLabbel id="username" v-model="username" type="text" size="default" placeholder="Pseudo" />
       </div>
 
       <div>
         <label for="email">Email</label>
-        <input id="email" v-model="email" type="email" required placeholder="exemple@test.com">
+        <MLabbel id="email" v-model="email" type="email" size="default" placeholder="exemple@test.com" />
       </div>
 
       <div>
         <label for="password">Mot de passe</label>
-        <input id="password" v-model="password" type="password" required>
+        <MLabbel id="password" v-model="password" type="password" size="default" placeholder="Mot de passe" />
       </div>
 
       <div>
         <label for="firstName">Prénom (optionnel)</label>
-        <input id="firstName" v-model="firstName" type="text">
+        <MLabbel id="firstName" v-model="firstName" type="text" size="default" placeholder="Prénom" />
       </div>
 
       <div>
         <label for="lastName">Nom (optionnel)</label>
-        <input id="lastName" v-model="lastName" type="text">
+        <MLabbel id="lastName" v-model="lastName" type="text" size="default" placeholder="Nom" />
       </div>
 
       <MButton type="submit">S'inscrire</MButton>
