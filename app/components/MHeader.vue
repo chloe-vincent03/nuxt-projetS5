@@ -65,9 +65,10 @@ const logout = () => {
               </NuxtLink>
             </li>
             <li class="header__item">
-              <MButton size="small"
+              <MButton 
+                size='small'
+                type='button'
                 @click="logout"
-                type="button"
               >
                 Se déconnecter
               </MButton>
@@ -96,21 +97,21 @@ const logout = () => {
 
       <button
         class="header__burger"
+        aria-label='Menu'
         @click="toggleMenu"
-        aria-label="Menu"
       >
         <span
           class="header__burger-line"
           :class="{ 'header__burger-line--1': isNavOpen }"
-        ></span>
+        />
         <span
           class="header__burger-line"
           :class="{ 'header__burger-line--2': isNavOpen }"
-        ></span>
+        />
         <span
           class="header__burger-line"
           :class="{ 'header__burger-line--3': isNavOpen }"
-        ></span>
+        />
       </button>
 
     </div>

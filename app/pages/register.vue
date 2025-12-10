@@ -7,8 +7,9 @@ const lastName = ref('')
 
 const config = useRuntimeConfig()
 
-async function onSubmit() {
+async function onSubmit () {
   try {
+    //eslint-disable-next-line no-console
     console.log('=> Appel API pour créer un compte')
     const userData = {
       username: username.value,
@@ -28,7 +29,7 @@ async function onSubmit() {
     })
 
     if (!response.ok) {
-        throw new Error('Erreur lors de l\'inscription')
+      throw new Error('Erreur lors de l\'inscription')
     }
     
     await navigateTo('/dashboard')
@@ -36,7 +37,7 @@ async function onSubmit() {
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Erreur inscription:', err)
-    alert("Une erreur est survenue lors de l'inscription.")
+    alert('Une erreur est survenue lors de l inscription.')
   }
 }
 </script>
