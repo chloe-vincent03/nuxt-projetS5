@@ -70,9 +70,9 @@ defineProps<{
   }
 
   &__logo {
-    order: 1; 
+    order: 1;
     @media (min-width: rem(768)) {
-      order: 1;/
+      order: 1;
     }
   }
 
