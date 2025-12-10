@@ -34,16 +34,20 @@ async function onSubmit (){
   }
 }
 
-
 </script>
 
 <template>
   <div>
-    <h1>Connexions</h1>
+    <MTitle as="h1" size="large">Connexions</MTitle>
     <form action="" @submit.prevent="onSubmit">
-      <input v-model="email" type="text">
-      <input v-model="password" type="password">
-      <MButton type="submit" >Se connecter</MButton>
+      <label for="email">Email</label>
+      <MLabbel v-model="email" for="email" type="email" size="default" placeholder="Email" />
+      <label for="password">Mot de passe</label>
+      <MLabbel v-model="password" for="password" type="password" size="default" placeholder="Mot de passe" />
+      <div> 
+        <MButton type="submit" >Se connecter</MButton>
+        <p>Pas de compte ? <NuxtLink to="/register">S'inscrire</NuxtLink></p>
+      </div>
     </form>
   </div>
 </template>
