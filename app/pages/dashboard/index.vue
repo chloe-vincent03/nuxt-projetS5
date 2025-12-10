@@ -11,11 +11,9 @@ const cookie = useCookie('recipe_token')
 const { data: user } = await useFetch<User>(`${config.public.apiUrl}/api/users/profile`, {
   headers: {
     Authorization: `Bearer ${cookie.value}`
-  }
-  ,
-  transform: (response: User) => {
-    return response.data || response
-  }
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (response: any) => response.data || response
 })
 
 // Récupération des recettes de l'utilisateur connecté
