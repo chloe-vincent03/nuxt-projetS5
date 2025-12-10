@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { User } from '~/types/api/user'
+
 definePageMeta({
   middleware: ['auth']
 })
@@ -13,17 +15,12 @@ const form = ref({
   last_name: ''
 })
 
-interface UserProfile {
-  username: string
-  email: string
-  first_name?: string
-  last_name?: string
-}
-
-const { data: user, error } = await useFetch<UserProfile>(`${config.public.apiUrl}/api/users/profile`, {
+const { data: user, error } = await useFetch<User>(`${config.public.apiUrl}/api/users/profile`, {
   headers: {
     Authorization: `Bearer ${cookie.value}`
-  }
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (response: any) => response.data || response
 })
 
 if (error.value) {
@@ -33,12 +30,10 @@ if (error.value) {
 
 watch(user, (newUser) => {
   if (newUser) {
-    const userData = newUser.data || newUser
-
-    form.value.username = userData.username || ''
-    form.value.email = userData.email || ''
-    form.value.first_name = userData.first_name || ''
-    form.value.last_name = userData.last_name || ''
+    form.value.username = newUser.username || ''
+    form.value.email = newUser.email || ''
+    form.value.first_name = newUser.first_name || ''
+    form.value.last_name = newUser.last_name || ''
   }
 }, { immediate: true })
 
