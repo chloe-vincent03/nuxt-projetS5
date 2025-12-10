@@ -26,3 +26,9 @@ useHead(() => ({
   </main>
 
 </template>
+
+<style scoped lang="scss">
+  .ly-default {
+  padding-top: rem(80);
+  }
+</style>
