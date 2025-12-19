@@ -145,20 +145,48 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
         </div>
       </div>
 
-      <div class="pages">
-        <span v-for="n in totalPages" :key="`page-${n}`" @click="onPageClick(n)">
-          {{ n }}
-        </span>
+      <!-- PAGINATION AVEC BOUTONS -->
+      <div class="pagination-buttons">
+        <MButton
+          :disabled="page === 1"
+          variant="outline"
+          size="small"
+          @click="onPageClick(page - 1)"
+        >
+          ◀ Précédent
+        </MButton>
+
+        <div class="page-numbers">
+          <MButton
+            v-for="n in totalPages"
+            :key="`page-${n}`"
+            :variant="page === n ? 'default' : 'outline'"
+            size="small"
+            @click="onPageClick(n)"
+          >
+            {{ n }}
+          </MButton>
+        </div>
+
+        <MButton
+          :disabled="page === totalPages"
+          size="small"
+          variant="outline"
+          @click="onPageClick(page + 1)"
+        >
+          Suivant ▶
+        </MButton>
       </div>
     </div>
   </div>
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+/* HERO FULL WIDTH */
 .hero-fullwidth {
   width: 100vw; 
-  margin-left: calc(-50vw + 50%); 
+  margin-left: calc(-50vw + 50%);
 }
 .hero {
   --hero-dark: 0.45;
@@ -268,23 +296,18 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
 }
 
 /* PAGINATION */
-.pages {
+.pagination-buttons {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 25px 0;
+  flex-wrap: wrap;
 }
 
-.pages span {
-  padding: 6px 12px;
-  background: #f0f0f0;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s ease;
-  border: 1px solid #dedede;
-}
-
-.pages span:hover {
-  background: #e2e2e2;
+.page-numbers {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 </style>
