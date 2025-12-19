@@ -41,41 +41,213 @@ async function onSubmit () {
   }
 }
 </script>
-
 <template>
-  <div>
-    <MTitle as="h1" size="large">Créer un compte</MTitle>
-    <form action="" @submit.prevent="onSubmit">
-      
-      <div>
-        <label for="username">Nom d'utilisateur</label>
-        <MLabbel id="username" v-model="username" type="text" size="default" placeholder="Pseudo" />
-      </div>
+  <div class="register">
+    <div class="register__card">
+      <MTitle as="h1" size="large" class="register__title">
+        Créer un compte
+      </MTitle>
 
-      <div>
-        <label for="email">Email</label>
-        <MLabbel id="email" v-model="email" type="email" size="default" placeholder="exemple@test.com" />
-      </div>
+      <form class="register__form" @submit.prevent="onSubmit">
+        <div class="register__field">
+          <label for="username" class="register__label">
+            Nom d'utilisateur
+          </label>
+          <MLabbel
+            id="username"
+            v-model="username"
+            type="text"
+            size="default"
+            placeholder="Pseudo"
+            class="register__input"
+          />
+        </div>
 
-      <div>
-        <label for="password">Mot de passe</label>
-        <MLabbel id="password" v-model="password" type="password" size="default" placeholder="Mot de passe" />
-      </div>
+        <div class="register__field">
+          <label for="email" class="register__label">
+            Email
+          </label>
+          <MLabbel
+            id="email"
+            v-model="email"
+            type="email"
+            size="default"
+            placeholder="exemple@test.com"
+            class="register__input"
+          />
+        </div>
 
-      <div>
-        <label for="firstName">Prénom (optionnel)</label>
-        <MLabbel id="firstName" v-model="firstName" type="text" size="default" placeholder="Prénom" />
-      </div>
+        <div class="register__field">
+          <label for="password" class="register__label">
+            Mot de passe
+          </label>
+          <MLabbel
+            id="password"
+            v-model="password"
+            type="password"
+            size="default"
+            placeholder="Mot de passe"
+            class="register__input"
+          />
+        </div>
 
-      <div>
-        <label for="lastName">Nom (optionnel)</label>
-        <MLabbel id="lastName" v-model="lastName" type="text" size="default" placeholder="Nom" />
-      </div>
+        <div class="register__field">
+          <label for="firstName" class="register__label">
+            Prénom <span class="register__optional">(optionnel)</span>
+          </label>
+          <MLabbel
+            id="firstName"
+            v-model="firstName"
+            type="text"
+            size="default"
+            placeholder="Prénom"
+            class="register__input"
+          />
+        </div>
 
-      <MButton type="submit">S'inscrire</MButton>
-    </form>
+        <div class="register__field">
+          <label for="lastName" class="register__label">
+            Nom <span class="register__optional">(optionnel)</span>
+          </label>
+          <MLabbel
+            id="lastName"
+            v-model="lastName"
+            type="text"
+            size="default"
+            placeholder="Nom"
+            class="register__input"
+          />
+        </div>
 
-    <p>Déjà un compte ? <NuxtLink to="/login">Se connecter</NuxtLink></p>
+        <div class="register__actions">
+          <MButton type="submit" class="register__button">
+            S'inscrire
+          </MButton>
+
+          <p class="register__login">
+            Déjà un compte ?
+            <NuxtLink to="/login" class="register__link">
+              Se connecter
+            </NuxtLink>
+          </p>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
+<style lang="scss" scoped>
+.register {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f4f6fb, #e9ecf5);
+  padding: 1rem;
+
+  &__card {
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      padding: 1.5rem 1.2rem;
+      border-radius: 12px;
+    }
+
+    /* Desktop large */
+    @media (min-width: 1200px) {
+      max-width: 520px;
+    }
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    @media (max-width: 480px) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    @media (max-width: 480px) {
+      gap: 1.2rem;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+    }
+  }
+
+  &__optional {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #888;
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  &__button {
+    width: 100%;
+  }
+
+  &__login {
+    font-size: 0.9rem;
+    color: #666;
+
+    @media (max-width: 480px) {
+      text-align: center;
+    }
+  }
+
+  &__link {
+    color: #4f46e5;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* Tablette */
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+
+    &__card {
+      max-width: 90%;
+    }
+  }
+}
+</style>
