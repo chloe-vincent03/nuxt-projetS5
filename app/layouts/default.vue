@@ -21,7 +21,12 @@ useHead(() => ({
 
   <main class="ly-default" >
     <MHeader v-if="data" v-bind="{navigation: data.navigation, logo: data.logo}" />
-    <slot />
+    <div
+      class="ly-default__content"
+      :class="$route.meta.layoutClass"
+    >
+      <slot />
+    </div>
     <MFooter v-if="data" v-bind="{navigation: data.navigation, logofooter: data.logofooter}" />
   </main>
 
@@ -30,5 +35,20 @@ useHead(() => ({
 <style scoped lang="scss">
   .ly-default {
   padding-top: rem(80);
+
+  &__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+
+    @media (max-width: 480px) {
+      padding: 1rem;
+    }
   }
+
+  &__content.is-fullwidth {
+    max-width: none;
+    padding: 0;
+  }
+}
 </style>
