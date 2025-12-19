@@ -205,11 +205,11 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
 .hero-content {
   text-align: center;
   color: var(--color-text-w);
-  max-width: 700px;
-  padding: 20px;
+  max-width: rem(700);
+  padding: rem(20);
 
-  @media (max-width: 480px) {
-    padding: 10px;
+  @media (max-width: rem(480)) {
+    padding: rem(10);
   }
 }
 
@@ -217,25 +217,25 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
   position: absolute;
   bottom: 10%;
   right: 10%;
-  width: 550px;
-  height: 310px;
+  width: rem(550);
+  height: rem(310);
 
-  @media (max-width: 1023px) {
+  @media (max-width: rem(1023)) {
     position: relative;
     width: 100%;
     height: auto;
-    margin-top: 20px;
+    margin-top: rem(20);
   }
 }
 
 /* PAGE CONTENT */
 .page-content {
-  max-width: 1200px;
+  max-width: rem(1200);
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: rem(15);
 
-  @media (max-width: 480px) {
-    padding: 1rem;
+  @media (max-width: rem(480)) {
+    padding: rem(10);
   }
 }
 
@@ -243,24 +243,24 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
 .recipes-filtres {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 25px 0;
+  gap: rem(10);
+  margin: rem(25) 0;
 }
 
 .recipes-filtres__item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: #f7f7f7;
-  border-radius: 8px;
+  gap: rem(6);
+  padding: rem(6) rem(12);
+  background: var(color-bg);
+  border-radius: rem(8);
   cursor: pointer;
   transition: 0.2s ease;
-  border: 1px solid #e5e5e5;
+  border: rem(1) solid var(--color-border);
 }
 
 .recipes-filtres__item:hover {
-  background: #ececec;
+  background: var(--color-primary);
 }
 
 .recipes-filtres__item input {
@@ -274,19 +274,19 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
 
 /* GRID RECETTES */
 .recipes-grid {
-  margin-top: 20px;
+  margin-top: rem(20);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  gap: rem(25);
 
-  @media (max-width: 1023px) {
+  @media (max-width: rem(1023)) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: rem(16);
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: rem(480)) {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: rem(16);
   }
 }
 
@@ -300,14 +300,14 @@ const cardSize = computed(() => isDesktop.value ? 'large' : 'small')
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin: 25px 0;
+  gap: rem(10);
+  margin: rem(25) 0;
   flex-wrap: wrap;
 }
 
 .page-numbers {
   display: flex;
-  gap: 6px;
+  gap: rem(6);
   flex-wrap: wrap;
 }
 </style>

@@ -34,7 +34,7 @@ const { urlFor } = useSanityImage()
 <style lang="scss" scoped>
   .books {
   &__container {
-    max-width: 768px;
+    max-width: rem(768);
     margin: 0 auto;
     padding: 2rem 1rem;
     min-height: 100vh;
@@ -71,7 +71,7 @@ const { urlFor } = useSanityImage()
 
     &-date {
       font-size: 0.875rem;
-      color: #666;
+      color: var(--color-b);
     }
   }
 }
