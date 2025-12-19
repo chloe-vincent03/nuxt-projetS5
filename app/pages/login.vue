@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+definePageMeta({
+  layoutClass: 'is-fullwidth'
+})
 const email = ref ('')
 const password = ref('')
 
