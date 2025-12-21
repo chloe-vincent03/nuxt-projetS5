@@ -1,98 +1,128 @@
 <script lang="ts" setup>
+import type { Cuisine } from '~/types/api/cuisine'
 
-interface ApiCuisine {
-  cuisine_id: number
-  name: string
-}
-
-interface Cuisine {
-  id: number
-  name: string
-}
-
-
+/* =========================
+   Champs recette
+========================= */
 const title = ref('')
 const description = ref('')
-const image_url = ref('')
-const cuisine_id = ref<number | ''>('') 
-const goal_id = ref('')
+const image_url = ref<string | null>(null)
 
-const DietaryInformation = ref('')
-const AllergiesInformation = ref('')
+const cuisine_id = ref<number | null>(null)
+const goal_id = ref<number | null>(null)
+
+const DietaryInformation_id = ref<number | null>(null)
+const AllergiesInformation_id = ref<number | null>(null)
+
+/* =========================
+   Ingrédients & étapes
+========================= */
+type IngredientForm = {
+  ingredient_id: number | null
+  quantity: number | null
+}
+
+type InstructionForm = {
+  description: string
+}
+
+const ingredients = ref<IngredientForm[]>([
+  { ingredient_id: null, quantity: null }
+])
+
+const instructions = ref<InstructionForm[]>([
+  { description: '' }
+])
+
+/* =========================
+   Données externes
+========================= */
+const cuisines = ref<Cuisine[]>([])
+const availableIngredients = ref<{ ingredient_id: number; name: string; unit: string }[]>([])
 
 const config = useRuntimeConfig()
 const cookie = useCookie('recipe_token')
 
-
-const cuisines = ref<Cuisine[]>([]) 
-
+/* =========================
+   Fetch cuisines
+========================= */
 async function fetchCuisines () {
-  try {
-    const response = await fetch(`${config.public.apiUrl}/api/cuisines`, {
-      headers: { Accept: 'application/json' }
-    })
+  const res = await fetch(`${config.public.apiUrl}/api/cuisines`)
+  const json = await res.json()
+  if (json.success) cuisines.value = json.data
+}
 
-    const json = await response.json()
-
-    if (json.success && Array.isArray(json.data)) {
-      const rawData = json.data as ApiCuisine[]
-
-      cuisines.value = rawData.map((c): Cuisine => ({
-        id: c.cuisine_id,
-        name: c.name
-      }))
-    }
-
-  } catch (err) {
-    //eslint-disable-next-line no-console
-    console.log('Erreur chargement cuisines', err)
-  }
+/* =========================
+   Fetch ingrédients
+========================= */
+async function fetchIngredients () {
+  const res = await fetch(`${config.public.apiUrl}/api/ingredients`)
+  const json = await res.json()
+  if (json.success) availableIngredients.value = json.data
 }
 
 onMounted(() => {
   fetchCuisines()
+  fetchIngredients()
 })
 
+/* =========================
+   Gestion dynamique
+========================= */
+function addIngredient () {
+  ingredients.value.push({ ingredient_id: null, quantity: null })
+}
 
+function removeIngredient (index: number) {
+  ingredients.value.splice(index, 1)
+}
+
+function addInstruction () {
+  instructions.value.push({ description: '' })
+}
+
+function removeInstruction (index: number) {
+  instructions.value.splice(index, 1)
+}
+
+/* =========================
+   Submit
+========================= */
 async function onSubmit () {
-  try {
-    //eslint-disable-next-line no-console
-    console.log('=> Api call to create recipe')
+  if (!cuisine_id.value || !goal_id.value) return
 
-    const response = await fetch(`${config.public.apiUrl}/api/recipes`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookie.value}`
-      },
-      body: JSON.stringify({
-        title: title.value,
-        description: description.value,
-        image_url: image_url.value || null,
+  const payload = {
+    title: title.value,
+    description: description.value,
+    image_url: image_url.value,
 
-        cuisine_id: Number(cuisine_id.value), // Id numérique correct
-        goal_id: goal_id.value,
+    cuisine_id: cuisine_id.value,
+    goal_id: goal_id.value,
+    DietaryInformation_id: DietaryInformation_id.value,
+    AllergiesInformation_id: AllergiesInformation_id.value,
 
-        DietaryInformation_id: DietaryInformation.value || null,
-        AllergiesInformation_id: AllergiesInformation.value || null
-      })
-    })
+    ingredients: ingredients.value.map(i => ({
+      ingredient_id: i.ingredient_id!,
+      quantity: i.quantity!
+    })),
 
-    const json = await response.json()
-
-    if (!json.success) {
-      //eslint-disable-next-line no-console
-      console.error(json.message)
-      return
-    }
-
-    await navigateTo('/dashboard')
-
-  } catch (err) {
-    //eslint-disable-next-line no-console
-    console.log(err)
+    instructions: instructions.value.map((step, index) => ({
+      step_number: index + 1,
+      description: step.description
+    }))
   }
+
+  const res = await fetch(`${config.public.apiUrl}/api/recipes/full`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${cookie.value}`
+    },
+    body: JSON.stringify(payload)
+  })
+
+  const json = await res.json()
+  if (json.success) await navigateTo('/dashboard')
 }
 </script>
 
@@ -102,28 +132,83 @@ async function onSubmit () {
 
     <form @submit.prevent="onSubmit">
 
-      <input v-model="title" type="text" placeholder="Titre" required>
-      <input v-model="description" type="text" placeholder="Description" required>
-      <input v-model="image_url" type="text" placeholder="URL de l'image">
+      <!-- Infos de base -->
+      <input v-model="title" placeholder="Titre" required />
+      <textarea v-model="description" placeholder="Description" required />
+      <input v-model="image_url" placeholder="URL de l'image" />
 
+      <!-- Cuisine -->
       <select v-model="cuisine_id" required>
-        <option disabled value="">Sélectionner une cuisine</option>
-
+        <option :value="null" disabled>Sélectionner une cuisine</option>
         <option
           v-for="cuisine in cuisines"
-          :key="cuisine.id"
-          :value="cuisine.id"
+          :key="cuisine.cuisine_id"
+          :value="cuisine.cuisine_id"
         >
           {{ cuisine.name }}
         </option>
       </select>
 
-      <input v-model="goal_id" type="text" placeholder="Goal ID">
+      <!-- Objectif -->
+      <input v-model.number="goal_id" type="number" placeholder="Goal ID" />
+      <input v-model.number="DietaryInformation_id" type="number" placeholder="Dietary Information ID" />
+      <input v-model="AllergiesInformation_id" type="number" placeholder="Allergies Information ID" />
 
-      <input v-model="DietaryInformation" type="text" placeholder="Dietary Information">
-      <input v-model="AllergiesInformation" type="text" placeholder="Allergies Information">
+      <!-- =========================
+           Ingrédients
+      ========================== -->
+      <h2>Ingrédients</h2>
 
-      <MButton type="submit">Créer ma recette</MButton>
+      <div
+        v-for="(ingredient, index) in ingredients"
+        :key="index"
+      >
+        <select v-model="ingredient.ingredient_id" required>
+          <option :value="null" disabled>Sélectionner un ingrédient</option>
+          <option
+            v-for="i in availableIngredients"
+            :key="i.ingredient_id"
+            :value="i.ingredient_id"
+          >
+            {{ i.name }} ({{ i.unit }})
+          </option>
+        </select>
+
+        <input
+          v-model.number="ingredient.quantity"
+          type="number"
+          placeholder="Quantité"
+          required
+        >
+
+        <button type="button" @click="removeIngredient(index)">❌</button>
+      </div>
+
+      <button type="button" @click="addIngredient">➕ Ajouter un ingrédient</button>
+
+      <!-- =========================
+           Étapes
+      ========================== -->
+      <h2>Étapes</h2>
+
+      <div
+        v-for="(step, index) in instructions"
+        :key="index"
+      >
+        <textarea
+          v-model="step.description"
+          :placeholder="`Étape ${index + 1}`"
+          required
+        />
+
+        <button type="button" @click="removeInstruction(index)">❌</button>
+      </div>
+
+      <button type="button" @click="addInstruction">➕ Ajouter une étape</button>
+
+      <MButton type="submit">
+        Créer la recette
+      </MButton>
 
     </form>
   </div>
