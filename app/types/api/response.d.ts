@@ -1,5 +1,5 @@
-type ApiResponse<T> = {
-  sucess: boolean
+export type ApiResponse<T> = {
+  success: boolean
   count?: number
   data: T
 }

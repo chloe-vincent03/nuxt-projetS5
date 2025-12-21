@@ -1,4 +1,4 @@
-type Cuisine = {
+export type Cuisine = {
   cuisine_id: number
   name: string
 }
