@@ -10,6 +10,7 @@ type Recipe = {
   goal_name: string | null
   diet_name: string | null
   allergy_name: string | null
+  user_id: number
 }
 
 type RecipeInstructions = {

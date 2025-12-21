@@ -1,5 +1,6 @@
 <script lang="ts" setup >
 import type { FullRecipe } from '~/types/api/recipe'
+import type { User } from '~/types/api/user'
 const route = useRoute()
 const config = useRuntimeConfig()
 const cookie = useCookie('recipe_token') 
@@ -10,6 +11,14 @@ const { data: recipe, error } = await useAsyncData(`recipe-${route.params.id}`, 
     `${config.public.apiUrl}/api/recipes/${route.params.id}`
   )
   return data
+})
+
+const { data: user } = await useFetch<User>(`${config.public.apiUrl}/api/users/profile`, {
+  headers: {
+    Authorization: `Bearer ${cookie.value}`
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (response: any) => response.data || response
 })
 
 if (!recipe.value || error.value) throw new Error('Recipe not found')
@@ -85,9 +94,14 @@ async function deleteRecipe () {
       </aside>
     </div>
 
-    <MButton variant="supp" @click="deleteRecipe">
-      Supprimer la recette
-    </MButton>
+    <div class="actions">
+      <NuxtLink v-if="user && user.user_id === recipe.user_id" :to="`/recipe/edit/${recipe.recipe_id}`">
+        <MButton variant="outline">Modifier la recette</MButton>
+      </NuxtLink>
+      <MButton v-if="user && user.user_id === recipe.user_id" variant="supp" @click="deleteRecipe">
+        Supprimer la recette
+      </MButton>
+    </div>
 
   </div>
 </template>
