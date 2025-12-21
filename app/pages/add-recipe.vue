@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-import type { Cuisine } from '~/types/api/cuisine'
+/* import type { Cuisine } from '~/types/api/cuisine'
+import type { Goal } from '~/types/api/goal'
+import type { Diet } from '~/types/api/diet'
+import type { Allergy } from '~/types/api/allergy' */
 
 /* =========================
    Champs recette
@@ -10,9 +13,13 @@ const image_url = ref<string | null>(null)
 
 const cuisine_id = ref<number | null>(null)
 const goal_id = ref<number | null>(null)
-
 const DietaryInformation_id = ref<number | null>(null)
 const AllergiesInformation_id = ref<number | null>(null)
+
+const goals = ref<Goal[]>([])
+const diets = ref<Diet[]>([])
+const allergies = ref<Allergy[]>([])
+
 
 /* =========================
    Ingrédients & étapes
@@ -44,13 +51,31 @@ const config = useRuntimeConfig()
 const cookie = useCookie('recipe_token')
 
 /* =========================
-   Fetch cuisines
+   Fetch données externes
 ========================= */
 async function fetchCuisines () {
   const res = await fetch(`${config.public.apiUrl}/api/cuisines`)
   const json = await res.json()
   if (json.success) cuisines.value = json.data
 }
+async function fetchGoals () {
+  const res = await fetch(`${config.public.apiUrl}/api/goals`)
+  const json = await res.json()
+  if (json.success) goals.value = json.data
+}
+
+async function fetchDiets () {
+  const res = await fetch(`${config.public.apiUrl}/api/diet`)
+  const json = await res.json()
+  if (json.success) diets.value = json.data
+}
+
+async function fetchAllergies () {
+  const res = await fetch(`${config.public.apiUrl}/api/allergie`)
+  const json = await res.json()
+  if (json.success) allergies.value = json.data
+}
+
 
 /* =========================
    Fetch ingrédients
@@ -63,6 +88,9 @@ async function fetchIngredients () {
 
 onMounted(() => {
   fetchCuisines()
+  fetchGoals()
+  fetchDiets()
+  fetchAllergies()
   fetchIngredients()
 })
 
@@ -150,9 +178,41 @@ async function onSubmit () {
       </select>
 
       <!-- Objectif -->
-      <input v-model.number="goal_id" type="number" placeholder="Goal ID" />
-      <input v-model.number="DietaryInformation_id" type="number" placeholder="Dietary Information ID" />
-      <input v-model="AllergiesInformation_id" type="number" placeholder="Allergies Information ID" />
+      <select v-model="goal_id" required>
+        <option :value="null" disabled>Sélectionner un objectif</option>
+        <option
+          v-for="goal in goals"
+          :key="goal.goal_id"
+          :value="goal.goal_id"
+        >
+          {{ goal.name }}
+        </option>
+      </select>
+
+      <!-- Régime -->
+      <select v-model="DietaryInformation_id">
+        <option :value="null">Aucun régime particulier</option>
+        <option
+          v-for="diet in diets"
+          :key="diet.diet_id"
+          :value="diet.diet_id"
+        >
+          {{ diet.name }}
+        </option>
+      </select>
+
+      <!-- Allergènes -->
+      <select v-model="AllergiesInformation_id">
+        <option :value="null">Aucun allergène</option>
+        <option
+          v-for="allergy in allergies"
+          :key="allergy.allergy_id"
+          :value="allergy.allergy_id"
+        >
+          {{ allergy.name }}
+        </option>
+      </select>
+
 
       <!-- =========================
            Ingrédients
