@@ -44,14 +44,6 @@ defineProps<{
         padding: rem(20) rem(24);
         font-size: rem(16);
     }
-/*     &--disabled {
-        background: #CCCCCC;
-        color: #666666;
-        cursor: not-allowed;
-    }
-    &--pressed {
-        background: #030d67; 
-    }*/
     &.outline{
         background: var(--button-color-text);
         color: var(--button-bg-color);
@@ -60,24 +52,12 @@ defineProps<{
         background: var(--button-bg-color);
         color: var(--button-color-text);
         }
+    }
     &.supp{
         background: var(--color-error);
         color: var(--color-text-w);
 
     }
-/*         &--focus {
-            outline: 4px solid #96a1f3;
-    
-        }
-        &--disabled {
-            background: #fffefe;
-            color: #666666;
-            border-color: #CCCCCC;
-            cursor: not-allowed;
-            
-        }*/
-    }
 }
-
 
 </style>

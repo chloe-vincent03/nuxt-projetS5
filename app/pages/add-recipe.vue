@@ -200,7 +200,7 @@ async function onSubmit () {
               <option v-for="i in availableIngredients" :key="i.ingredient_id" :value="i.ingredient_id">{{ i.name }} ({{ i.unit }})</option>
             </select>
             <input v-model.number="ingredient.quantity" type="number" placeholder="Quantité" required />
-            <MButton size="tiny" variant="outline" @click="removeIngredient(index)">Supprimer</MButton>
+            <MButton size="tiny" variant="supp" @click="removeIngredient(index)">Supprimer</MButton>
           </div>
         </div>
         <MButton size="small" variant="outline" class="recipe-form__section-add" @click="addIngredient">Ajouter un ingrédient</MButton>
@@ -212,7 +212,7 @@ async function onSubmit () {
         <div class="recipe-form__section-list">
           <div v-for="(step, index) in instructions" :key="index" class="recipe-form__section-item">
             <textarea v-model="step.description" :placeholder="`Étape ${index + 1}`" required />
-            <MButton size="tiny" variant="outline" @click="removeInstruction(index)">Supprimer</MButton>
+            <MButton size="tiny" variant="supp" @click="removeInstruction(index)">Supprimer</MButton>
           </div>
         </div>
         <MButton size="small" variant="outline" class="recipe-form__section-add" @click="addInstruction">Ajouter une étape</MButton>
