@@ -9,7 +9,7 @@ import type { Allergy } from '~/types/api/allergy' */
 ========================= */
 const title = ref('')
 const description = ref('')
-const image_url = ref<string | null>(null)
+const image_url = ref('')
 
 const cuisine_id = ref<number | null>(null)
 const goal_id = ref<number | null>(null)
@@ -155,121 +155,158 @@ async function onSubmit () {
 </script>
 
 <template>
-  <div>
-    <h1>Ajouter une recette</h1>
+  <div class="recipe-form">
+    <MTitle as="h1" size="large">Ajouter une recette</MTitle>
 
     <form @submit.prevent="onSubmit">
 
       <!-- Infos de base -->
-      <input v-model="title" placeholder="Titre" required />
-      <textarea v-model="description" placeholder="Description" required />
-      <input v-model="image_url" placeholder="URL de l'image" />
+      <div class="recipe-form__group">
+        <MLabbel v-model="title" size="large"  placeholder="Titre" required />
+        <textarea v-model="description" placeholder="Description" required />
+        <MLabbel v-model="image_url" size="large" placeholder="URL de l'image" />
+      </div>
 
-      <!-- Cuisine -->
-      <select v-model="cuisine_id" required>
-        <option :value="null" disabled>Sélectionner une cuisine</option>
-        <option
-          v-for="cuisine in cuisines"
-          :key="cuisine.cuisine_id"
-          :value="cuisine.cuisine_id"
-        >
-          {{ cuisine.name }}
-        </option>
-      </select>
-
-      <!-- Objectif -->
-      <select v-model="goal_id" required>
-        <option :value="null" disabled>Sélectionner un objectif</option>
-        <option
-          v-for="goal in goals"
-          :key="goal.goal_id"
-          :value="goal.goal_id"
-        >
-          {{ goal.name }}
-        </option>
-      </select>
-
-      <!-- Régime -->
-      <select v-model="DietaryInformation_id">
-        <option :value="null">Aucun régime particulier</option>
-        <option
-          v-for="diet in diets"
-          :key="diet.diet_id"
-          :value="diet.diet_id"
-        >
-          {{ diet.name }}
-        </option>
-      </select>
-
-      <!-- Allergènes -->
-      <select v-model="AllergiesInformation_id">
-        <option :value="null">Aucun allergène</option>
-        <option
-          v-for="allergy in allergies"
-          :key="allergy.allergy_id"
-          :value="allergy.allergy_id"
-        >
-          {{ allergy.name }}
-        </option>
-      </select>
-
-
-      <!-- =========================
-           Ingrédients
-      ========================== -->
-      <h2>Ingrédients</h2>
-
-      <div
-        v-for="(ingredient, index) in ingredients"
-        :key="index"
-      >
-        <select v-model="ingredient.ingredient_id" required>
-          <option :value="null" disabled>Sélectionner un ingrédient</option>
-          <option
-            v-for="i in availableIngredients"
-            :key="i.ingredient_id"
-            :value="i.ingredient_id"
-          >
-            {{ i.name }} ({{ i.unit }})
-          </option>
+      <!-- Cuisine / Objectif / Régime / Allergènes -->
+      <div class="recipe-form__group">
+        <select v-model="cuisine_id" required>
+          <option :value="null" disabled>Sélectionner une cuisine</option>
+          <option v-for="cuisine in cuisines" :key="cuisine.cuisine_id" :value="cuisine.cuisine_id">{{ cuisine.name }}</option>
         </select>
 
-        <input
-          v-model.number="ingredient.quantity"
-          type="number"
-          placeholder="Quantité"
-          required
-        >
+        <select v-model="goal_id" required>
+          <option :value="null" disabled>Sélectionner un objectif</option>
+          <option v-for="goal in goals" :key="goal.goal_id" :value="goal.goal_id">{{ goal.name }}</option>
+        </select>
 
-        <button type="button" @click="removeIngredient(index)">❌</button>
+        <select v-model="DietaryInformation_id">
+          <option :value="null">Aucun régime particulier</option>
+          <option v-for="diet in diets" :key="diet.diet_id" :value="diet.diet_id">{{ diet.name }}</option>
+        </select>
+
+        <select v-model="AllergiesInformation_id">
+          <option :value="null">Aucun allergène</option>
+          <option v-for="allergy in allergies" :key="allergy.allergy_id" :value="allergy.allergy_id">{{ allergy.name }}</option>
+        </select>
       </div>
 
-      <button type="button" @click="addIngredient">➕ Ajouter un ingrédient</button>
-
-      <!-- =========================
-           Étapes
-      ========================== -->
-      <h2>Étapes</h2>
-
-      <div
-        v-for="(step, index) in instructions"
-        :key="index"
-      >
-        <textarea
-          v-model="step.description"
-          :placeholder="`Étape ${index + 1}`"
-          required
-        />
-
-        <button type="button" @click="removeInstruction(index)">❌</button>
+      <!-- Ingrédients -->
+      <MTitle as="h2" size="medium">Ingrédients</MTitle>
+      <div class="recipe-form__section">
+        <div class="recipe-form__section-list">
+          <div v-for="(ingredient, index) in ingredients" :key="index" class="recipe-form__section-item">
+            <select v-model="ingredient.ingredient_id" required>
+              <option :value="null" disabled>Sélectionner un ingrédient</option>
+              <option v-for="i in availableIngredients" :key="i.ingredient_id" :value="i.ingredient_id">{{ i.name }} ({{ i.unit }})</option>
+            </select>
+            <input v-model.number="ingredient.quantity" type="number" placeholder="Quantité" required />
+            <MButton size="tiny" variant="outline" @click="removeIngredient(index)">Supprimer</MButton>
+          </div>
+        </div>
+        <MButton size="small" variant="outline" class="recipe-form__section-add" @click="addIngredient">Ajouter un ingrédient</MButton>
       </div>
 
-      <button type="button" @click="addInstruction">➕ Ajouter une étape</button>
+      <!-- Étapes -->
+      <MTitle as="h2" size="medium">Étapes</MTitle>
+      <div class="recipe-form__section">
+        <div class="recipe-form__section-list">
+          <div v-for="(step, index) in instructions" :key="index" class="recipe-form__section-item">
+            <textarea v-model="step.description" :placeholder="`Étape ${index + 1}`" required />
+            <MButton size="tiny" variant="outline" @click="removeInstruction(index)">Supprimer</MButton>
+          </div>
+        </div>
+        <MButton size="small" variant="outline" class="recipe-form__section-add" @click="addInstruction">Ajouter une étape</MButton>
+      </div>
 
-      <MButton type="submit">
-        Créer la recette
-      </MButton>
-
+      <!-- Submit -->
+      <div class="recipe-form__submit">
+        <MButton type="submit">Créer la recette</MButton>
+      </div>
     </form>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.recipe-form {
+  max-width: rem(800);
+  margin: 0 auto;
+  padding: rem(32); 
+  background: var(--color-text-w);
+  border-radius: rem(16); 
+  box-shadow: 0 rem(4) rem(15) rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+
+    select,
+    textarea,
+    input {
+      padding: rem(12) rem(16); 
+      font-size: rem(16);
+      border: rem(1) solid var(--color-bg);
+      border-radius: rem(8); 
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: var(--color-primary);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: rem(80);
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: rem(16);
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: rem(8);
+
+      select,
+      input[type="number"],
+      textarea {
+        flex: 1;
+      }
+
+      .m-button {
+        flex-shrink: 0;
+      }
+    }
+
+    &-add {
+      align-self: flex-start;
+      margin-top: rem(4);
+    }
+  }
+
+  &__submit {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(32);
+
+    .m-button {
+      padding: rem(12) rem(32);
+    }
+  }
+}
+
+</style>
+
