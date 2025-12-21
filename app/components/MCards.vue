@@ -1,4 +1,5 @@
 <script setup lang="ts" >
+import type { Recipe } from '~/types/api/recipe'
 defineProps<{
   size?: 'small' | 'default' | 'large'
   recipe: Recipe
