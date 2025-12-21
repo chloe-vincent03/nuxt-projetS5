@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { User } from '~/types/api/user'
+import type { Recipe } from '~/types/api/recipe'
 definePageMeta({
   middleware: ['auth']
 })
