@@ -1,5 +1,5 @@
 <script lang="ts" setup >
-
+import type { FullRecipe } from '~/types/api/recipe'
 const route = useRoute()
 const config = useRuntimeConfig()
 const cookie = useCookie('recipe_token') 

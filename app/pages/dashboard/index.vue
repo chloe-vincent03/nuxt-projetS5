@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { User } from '~/types/api/user'
+import type { Recipe } from '~/types/api/recipe'
 definePageMeta({
   middleware: ['auth']
 })
@@ -73,7 +74,7 @@ if (error && error.value) {
 
     <div class="actions">
       <MButton size="default" @click="logout">Se déconnecter</MButton>
-      <MButton variant="outline" size="default" @click="deleteAccount">
+      <MButton variant="supp" size="default" @click="deleteAccount">
         Supprimer mon compte
       </MButton>
       <NuxtLink to="/dashboard/edit">
