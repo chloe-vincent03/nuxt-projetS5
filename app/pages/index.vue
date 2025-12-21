@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FullRecipe } from '~/types/api/recipe'
 import type { SanityHome } from '~/types/cms/home'
 
 const query = groq`*[_type == "home"][0]`
@@ -8,7 +9,7 @@ const { urlFor } = useSanityImage()
 const config = useRuntimeConfig()
 const [{ data: recipes, error }, { data: cuisines }] = await Promise.all([
   useAsyncData('recipes', async () => {
-    const { data } = await $fetch<ApiResponse<Recipe[]>>(`${config.public.apiUrl}/api/recipes`)
+    const { data } = await $fetch<ApiResponse<FullRecipe[]>>(`${config.public.apiUrl}/api/recipes`)
     return data
   }),
   useAsyncData('cuisines', async () => {
@@ -39,7 +40,7 @@ function onCheckboxInput ($event: Event){
   }
 }
 
-const filteredRecipes = computed<Recipe[]>(() => {
+const filteredRecipes = computed<FullRecipe[]>(() => {
   if (!recipes.value) return []
   
   let results = recipes.value
@@ -56,7 +57,7 @@ const filteredRecipes = computed<Recipe[]>(() => {
   return results
 })
 
-const displayedRecipes = computed<Recipe[]>(() => {
+const displayedRecipes = computed<FullRecipe[]>(() => {
   if(!filteredRecipes.value) return []
   return filteredRecipes.value.slice((page.value -1)* RECIPES_PER_PAGE, page.value*RECIPES_PER_PAGE)
 })

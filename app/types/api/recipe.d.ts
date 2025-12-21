@@ -12,13 +12,13 @@ type Recipe = {
   allergy_name: string | null
 }
 
-type RecipeInstruction = {
+type RecipeInstructions = {
   instruction_id: number
   step_number: number
   description: string
 }
 
-type RecipeIngredient = {
+type RecipeIngredients = {
   ingredient_id: number
   name: string
   unit: string
@@ -31,7 +31,7 @@ type FullRecipe = Recipe & {
   DietaryInformation_id: number | null
   AllergiesInformation_id: number | null
 
-  ingredients: RecipeIngredient[]
-  instructions: RecipeInstruction[]
+  ingredients: RecipeIngredients[]
+  instructions: RecipeInstructions[]
 }
 
