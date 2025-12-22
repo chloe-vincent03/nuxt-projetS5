@@ -1,6 +1,7 @@
 <script lang="ts" setup >
 import type { FullRecipe } from '~/types/api/recipe'
 import type { User } from '~/types/api/user'
+import type { ApiResponse } from '~/types/api/response'
 const route = useRoute()
 const config = useRuntimeConfig()
 const cookie = useCookie('recipe_token') 

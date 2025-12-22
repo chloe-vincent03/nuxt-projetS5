@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { FullRecipe } from '~/types/api/recipe'
 import type { SanityHome } from '~/types/cms/home'
+import type { ApiResponse } from '~/types/api/response'
+import type { Cuisine } from '~/types/api/cuisine'
 
 const query = groq`*[_type == "home"][0]`
 const { data: home } = await useLazySanityQuery<SanityHome>(query)
@@ -45,7 +47,9 @@ const filteredRecipes = computed<FullRecipe[]>(() => {
   
   let results = recipes.value
   if(filters.value && filters.value.length){
-    results = results.filter(recipe => filters.value.includes(recipe.cuisine_name))
+    results = results.filter(recipe => 
+      recipe.cuisine_name && filters.value.includes(recipe.cuisine_name)
+    )
   }
   
   if (search.value.length){
