@@ -61,115 +61,175 @@ async function deleteRecipe () {
 </script>
 
 <template>
-  <div v-if="recipe" class="recipe-page">
-    <MTitle as="h1" size="large" class="title">{{ recipe.title }}</MTitle>
-    <p class="description">{{ recipe.description }}</p>
+  <div v-if="recipe" class="recipe">
+    <MTitle as="h1" size="large" class="recipe__title">
+      {{ recipe.title }}
+    </MTitle>
 
-    <div class="image-wrapper">
-      <NuxtImg :src="`/recipes/` + recipe.image_url" width="1200" height="800"/>
+    <p class="recipe__description">
+      {{ recipe.description }}
+    </p>
+
+    <div class="recipe__image-wrapper">
+      <NuxtImg
+        :src="`/recipes/` + recipe.image_url"
+        width="1200"
+        height="800"
+        class="recipe__image"
+      />
     </div>
 
-    <div class="content">
-      <div class="text-content">
-        <p v-if="recipe.cuisine_name">Cuisine : {{ recipe.cuisine_name }}</p>
-        <p v-if="recipe.goal_name">Objectif : {{ recipe.goal_name }}</p>
-        <p v-if="recipe.diet_name">Régime : {{ recipe.diet_name }}</p>
-        <p v-if="recipe.allergy_name">Allergènes : {{ recipe.allergy_name }}</p>
+    <div class="recipe__content">
+      <!-- Texte principal -->
+      <div class="recipe__text">
+        <p v-if="recipe.cuisine_name">
+          <strong>Cuisine :</strong> {{ recipe.cuisine_name }}
+        </p>
+        <p v-if="recipe.goal_name">
+          <strong>Objectif :</strong> {{ recipe.goal_name }}
+        </p>
+        <p v-if="recipe.diet_name">
+          <strong>Régime :</strong> {{ recipe.diet_name }}
+        </p>
+        <p v-if="recipe.allergy_name">
+          <strong>Allergènes :</strong> {{ recipe.allergy_name }}
+        </p>
 
-        <MTitle as="h2" size="small">Instructions</MTitle>
-        <ul class="instructions">
-          <li v-for="(instruction, index) in recipe.instructions" :key="index">
-            <strong>{{ instruction.step_number }}.</strong> {{ instruction.description }}
+        <MTitle as="h2" size="small" class="recipe__subtitle">
+          Instructions
+        </MTitle>
+
+        <ul class="recipe__instructions">
+          <li
+            v-for="(instruction, index) in recipe.instructions"
+            :key="index"
+            class="recipe__instruction"
+          >
+            <strong>{{ instruction.step_number }}.</strong>
+            {{ instruction.description }}
           </li>
         </ul>
       </div>
 
-      <aside class="ingredients-box">
-        <MTitle as="h2" size="small">Ingredients</MTitle>
-        <ul>
-          <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+      <!-- Ingrédients -->
+      <aside class="recipe__ingredients">
+        <MTitle as="h2" size="small" class="recipe__subtitle">
+          Ingrédients
+        </MTitle>
+
+        <ul class="recipe__ingredients-list">
+          <li
+            v-for="(ingredient, index) in recipe.ingredients"
+            :key="index"
+            class="recipe__ingredient"
+          >
             {{ ingredient.quantity }} {{ ingredient.unit }} de {{ ingredient.name }}
           </li>
         </ul>
       </aside>
     </div>
 
-    <div class="actions">
-      <NuxtLink v-if="user && user.user_id === recipe.user_id" :to="`/recipe/edit/${recipe.recipe_id}`">
-        <MButton variant="outline">Modifier la recette</MButton>
+    <!-- Actions -->
+    <div class="recipe__actions">
+      <NuxtLink
+        v-if="user && user.user_id === recipe.user_id"
+        :to="`/recipe/edit/${recipe.recipe_id}`"
+      >
+        <MButton variant="outline">
+          Modifier la recette
+        </MButton>
       </NuxtLink>
-      <MButton v-if="user && user.user_id === recipe.user_id" variant="supp" @click="deleteRecipe">
+
+      <MButton
+        v-if="user && user.user_id === recipe.user_id"
+        variant="supp"
+        @click="deleteRecipe"
+      >
         Supprimer la recette
       </MButton>
     </div>
-
   </div>
 </template>
 
-
 <style scoped lang="scss">
-.recipe-page {
+.recipe {
   max-width: 1300px;
   margin: auto;
   padding: rem(10);
   font-family: "Inter", sans-serif;
-}
 
-.title {
-  text-align: center;
+  &__title {
+    text-align: center;
+    margin-bottom: rem(10);
+  }
 
-}
+  &__description {
+    text-align: center;
+    font-size: rem(21);
+    margin-bottom: rem(30);
+  }
 
-.image-wrapper {
-  width: 100%;
-  border-radius: rem(14);
-  overflow: hidden;
-  margin-bottom: rem(35);
+  &__image-wrapper {
+    width: 100%;
+    border-radius: rem(14);
+    overflow: hidden;
+    margin-bottom: rem(35);
+  }
 
-  img {
+  &__image {
     width: 100%;
     display: block;
     object-fit: cover;
   }
-}
 
-.content {
-  display: flex;
-  gap: rem(30);
-}
+  &__content {
+    display: flex;
+    gap: rem(30);
+  }
 
-.text-content {
-  flex: 2;
+  &__text {
+    flex: 2;
 
-  h2 {
+    p {
+      margin-bottom: rem(6);
+    }
+  }
+
+  &__subtitle {
     margin-top: rem(25);
     margin-bottom: rem(10);
   }
 
-  .instructions li {
-    list-style:  none;
-  }
-}
-
-.description{
-  text-align: center;
-  font-size: rem(21);
-}
-
-.ingredients-box {
-  flex: 1;
-  background: var(--color-bg);
-  padding: rem(20);
-  border-radius: rem(12);
-  border: rem(1) solid var(--color-secondary);
-
-  h3 {
-    margin-bottom: rem(12);
+  &__instructions {
+    padding: 0;
   }
 
-  li {
+  &__instruction {
+    list-style: none;
+    margin-bottom: rem(8);
+  }
+
+  &__ingredients {
+    flex: 1;
+    background: var(--color-bg);
+    padding: rem(20);
+    border-radius: rem(12);
+    border: rem(1) solid var(--color-secondary);
+  }
+
+  &__ingredients-list {
+    padding-left: rem(10);
+  }
+
+  &__ingredient {
     margin: rem(6) 0;
     line-height: 1.4;
+  }
+
+  &__actions {
+    display: flex;
+    gap: rem(12);
+    margin-top: rem(30);
   }
 }
 </style>
