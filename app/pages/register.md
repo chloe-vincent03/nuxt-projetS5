@@ -1,0 +1,1 @@
+J'ai demander a l'ia ce que je pouvais faire pour transformer la page login en page register. J'ai demandé à l'ia de m'aider à corriger le style scss en ABEM.

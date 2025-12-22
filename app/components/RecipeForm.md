@@ -1,0 +1,3 @@
+J'ai demandé à l’IA comment je pouvais relier la page Ajout d’une œuvre et la page Modification d’œuvre, que j’avais faites chacune de leur côté. Je lui ai demandé de m’expliquer étape par étape comment je pouvais les rédiger.
+L’Ajout d’œuvre a été fait à moitié en cours, donc tout le fonctionnement de l’ajout dans la base de données a été fait sans IA. Par contre, j’ai utilisé l’IA pour certains select, car je n’arrivais pas à faire comme en cours, ainsi que pour ajouter les ingrédients et les étapes.
+J’ai demandé à l’IA de me dire ce que je devais changer dans la base de données et de m’expliquer étape par étape ces modifications.

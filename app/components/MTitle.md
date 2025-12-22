@@ -1,0 +1,1 @@
+Composant fait en classe, pas besoin de l’IA pour ajouter quoi que ce soit.

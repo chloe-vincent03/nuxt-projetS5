@@ -1,0 +1,1 @@
+J'ai demandé à l’IA de m’aider à supprimer le compte et de m’expliquer étape par étape ce que je devais faire pour modifier le profil. J’ai rencontré des erreurs, et elle m’a aidé à les corriger toutes. Et aussi m'aider avec le style scss en ABEM.

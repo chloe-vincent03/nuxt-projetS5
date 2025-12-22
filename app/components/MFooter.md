@@ -1,0 +1,1 @@
+Composant corrigé en classe, demander à l’IA pour le style et pour être sûr de le faire en version ABEM.
