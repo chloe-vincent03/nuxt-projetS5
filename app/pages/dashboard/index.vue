@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { User } from '~/types/api/user'
 import type { Recipe } from '~/types/api/recipe'
+import type { ApiResponse } from '~/types/api/response'
+
 definePageMeta({
   middleware: ['auth']
 })
@@ -60,76 +62,126 @@ if (error && error.value) {
 </script>
 
 <template>
-  <div class="p-dashboard">
-    <MTitle as="h1" size="large">Profil</MTitle>
-    
-    <!-- Affichage des infos utilisateur -->
-    <div v-if="user" class="user-info">
-      <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
-      <p><strong>Email :</strong> {{ user.email }}</p>
-      <p v-if="user.first_name || user.last_name">
+  <div class="dashboard">
+    <MTitle as="h1" size="large" class="dashboard__title">
+      Profil
+    </MTitle>
+
+    <!-- Informations utilisateur -->
+    <div v-if="user" class="dashboard__user">
+      <p class="dashboard__user-info">
+        <strong>Nom d'utilisateur :</strong> {{ user.username }}
+      </p>
+      <p class="dashboard__user-info">
+        <strong>Email :</strong> {{ user.email }}
+      </p>
+      <p
+        v-if="user.first_name || user.last_name"
+        class="dashboard__user-info"
+      >
         <strong>Nom complet :</strong> {{ user.first_name }} {{ user.last_name }}
       </p>
     </div>
 
-    <div class="actions">
-      <MButton size="default" @click="logout">Se déconnecter</MButton>
-      <MButton variant="supp" size="default" @click="deleteAccount">
+    <!-- Actions utilisateur -->
+    <div class="dashboard__actions">
+      <MButton size="default" @click="logout">
+        Se déconnecter
+      </MButton>
+
+      <MButton
+        variant="supp"
+        size="default"
+        @click="deleteAccount"
+      >
         Supprimer mon compte
       </MButton>
-      <NuxtLink to="/dashboard/edit">
-        <p variant="outline" size="small" >Modifier mon profil</p>
+
+      <NuxtLink to="/dashboard/edit" class="dashboard__edit-link">
+        <p>Modifier mon profil</p>
       </NuxtLink>
     </div>
 
-    <MTitle as="h2" size="medium">Mes recettes :</MTitle>
+    <MTitle as="h2" size="medium" class="dashboard__subtitle">
+      Mes recettes :
+    </MTitle>
 
-    <div v-if="myRecipes" class="recipes-grid" >
+    <!-- Liste des recettes -->
+    <div v-if="myRecipes" class="dashboard__recipes">
       <div
         v-for="(recipe, index) in myRecipes"
         :key="index"
+        class="dashboard__recipe"
       >
         <MCards :recipe="recipe" size="small" />
       </div>
-      <NuxtLink to="/add-recipe" >
-        <MButton variant="outline" size="small" >Ajouter un recette</MButton>
+
+      <NuxtLink to="/add-recipe" class="dashboard__add-recipe">
+        <MButton variant="outline" size="small">
+          Ajouter une recette
+        </MButton>
       </NuxtLink>
     </div>
 
-    <p v-else>Aucune recette trouvée.</p>
+    <p v-else class="dashboard__empty">
+      Aucune recette trouvée.
+    </p>
   </div>
 </template>
 
 <style scoped lang="scss">
-  .actions {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    align-items: center;
+.dashboard {
+  &__title {
+    margin-bottom: 1.5rem;
   }
 
-  .user-info {
-    background-color: #fff;
+  &__user {
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    
-    p {
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 
-  .recipes-grid {
+  &__user-info {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  &__edit-link {
+    text-decoration: none;
+  }
+
+  &__subtitle {
+    margin-bottom: 1rem;
+  }
+
+  &__recipes {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+
     @media (min-width: $medium-breakpoint) {
       grid-template-columns: repeat(2, 1fr);
     }
+
     @media (min-width: $large-breakpoint) {
       grid-template-columns: repeat(3, 1fr);
     }
   }
+
+  &__recipe {
+    display: flex;
+  }
+
+  &__add-recipe {
+    margin-top: 1rem;
+  }
+}
 </style>

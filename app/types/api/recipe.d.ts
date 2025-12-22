@@ -1,6 +1,6 @@
 import type { Cuisine } from '~/types/api/cuisine'
 
-type Recipe = {
+export type Recipe = {
   recipe_id: number
   title: string
   description: string
@@ -13,20 +13,20 @@ type Recipe = {
   user_id: number
 }
 
-type RecipeInstructions = {
+export type RecipeInstructions = {
   instruction_id: number
   step_number: number
   description: string
 }
 
-type RecipeIngredients = {
+export type RecipeIngredients = {
   ingredient_id: number
   name: string
   unit: string
   quantity: number
 }
 
-type FullRecipe = Recipe & {
+export type FullRecipe = Recipe & {
   cuisine_id: Cuisine['cuisine_id'] | null
   goal_id: number | null
   DietaryInformation_id: number | null

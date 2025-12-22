@@ -1,75 +1,9 @@
-# Nuxt Minimal Starter
+## Convention de nommage des branches et des commits
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Tout au long du projet, une convention de nommage a été mise en place afin de garantir une meilleure lisibilité et une organisation claire du travail.  
+Les développements de nouvelles fonctionnalités ont été réalisés dans un dossier de branches dédié nommé `feat`. Chaque branche est nommée de manière explicite en fonction de la fonctionnalité développée, par exemple `add-recipe`, afin d’identifier rapidement son objectif.
 
-## Setup
+Pour les commits, une convention inspirée du *Conventional Commits* a été utilisée. Chaque message de commit commence par le type `feat`, suivi du nom de la branche entre parenthèses, puis d’une description concise des modifications effectuées.  
+Exemple : `feat(add-recipe) ajout du formulaire de création de recette`.
 
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Cette convention permet de comprendre rapidement le contexte et le contenu de chaque modification, tout en facilitant le suivi de l’évolution du projet.

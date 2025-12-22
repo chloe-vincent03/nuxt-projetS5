@@ -94,26 +94,26 @@ async function onSubmit (){
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f4f6fb, #e9ecf5);
+  background: linear-gradient(135deg, var(--color-bg), var(--color-border));
   padding: 1rem;
 
   &__card {
     width: 100%;
-    max-width: 420px;
-    background-color: #ffffff;
-    border-radius: 16px;
+    max-width: rem(420);
+    background-color: var(--color-text-w);
+    border-radius: rem(16);
     padding: 2.5rem 2rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 
     /* Mobile */
     @media (max-width: 480px) {
       padding: 1.5rem 1.2rem;
-      border-radius: 12px;
+      border-radius: rem(12);
     }
 
     /* Desktop large */
     @media (min-width: 1200px) {
-      max-width: 460px;
+      max-width: rem(460);
     }
   }
 
@@ -121,7 +121,7 @@ async function onSubmit (){
     text-align: center;
     margin-bottom: 2rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: rem(480)) {
       margin-bottom: 1.5rem;
     }
   }
@@ -131,7 +131,7 @@ async function onSubmit (){
     flex-direction: column;
     gap: 1.4rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: rem(480)) {
       gap: 1.2rem;
     }
   }
@@ -147,7 +147,7 @@ async function onSubmit (){
     font-weight: 500;
     color: #444;
 
-    @media (max-width: 480px) {
+    @media (max-width: rem(480)) {
       font-size: 0.85rem;
     }
   }
@@ -170,15 +170,15 @@ async function onSubmit (){
 
   &__register {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-b);
 
-    @media (max-width: 480px) {
+    @media (max-width: rem(480)) {
       text-align: center;
     }
   }
 
   &__link {
-    color: #4f46e5;
+    color: var(--color-primary);
     font-weight: 500;
     text-decoration: none;
 
@@ -187,8 +187,7 @@ async function onSubmit (){
     }
   }
 
-  /* Tablette */
-  @media (max-width: 768px) {
+  @media (max-width: rem(768)) {
     padding: 0.75rem;
 
     &__card {
@@ -196,6 +195,5 @@ async function onSubmit (){
     }
   }
 }
-
 </style>
 

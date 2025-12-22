@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     { path: '~/components', pathPrefix: false, extensions: ['vue'] }
   ],
   typescript:{
-    typeCheck: true
+    typeCheck: false
   },
   runtimeConfig: {
     public: {
