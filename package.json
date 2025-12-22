@@ -33,6 +33,6 @@
     "react-is": "^19.2.1",
     "styled-components": "^6.1.19",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.5"
+    "vue-tsc": "^1.8.27"
   }
 }
